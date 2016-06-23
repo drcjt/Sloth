@@ -98,6 +98,8 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
                 // Lex Identifer
                 kind = SyntaxKind.IdentifierToken;
                 value = ScanIdentifier(ch);
+                
+                // Determine if identifier is a keyword
             }
             else if (ch == '"')
             {
