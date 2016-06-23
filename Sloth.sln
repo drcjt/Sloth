@@ -7,6 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlothCodeAnalysis", "SlothC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlothCodeAnalysis.Tests", "SlothCodeAnalysis.Tests\SlothCodeAnalysis.Tests.csproj", "{29DCFEF4-1ED5-4214-A2D0-65F5FED83CFF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{99942D0C-8B56-444B-B60B-E56521FFFA7F}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

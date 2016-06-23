@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace SlothCodeAnalysis.Syntax.InternalSyntax
@@ -13,6 +14,16 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
         {
             _sourceText = source;
             _offset = 0;
+            _keywordKindMap = new Dictionary<string, SyntaxKind>()
+            {
+                { "var", SyntaxKind.VarKeyword },
+                { "for", SyntaxKind.ForKeyword },
+                { "to", SyntaxKind.ToKeyword },
+                { "do", SyntaxKind.DoKeyword },
+                { "end", SyntaxKind.EndKeyword },
+                { "read_int", SyntaxKind.ReadIntKeyword },
+                { "print", SyntaxKind.PrintKeyword }
+            };
         }
 
         private char PeekChar()
@@ -84,6 +95,8 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
             internal object Value;
         }
 
+        private readonly Dictionary<string, SyntaxKind> _keywordKindMap;
+
         private TokenInfo ScanSyntaxToken()
         {
             var startOffset = _offset;
@@ -98,8 +111,14 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
                 // Lex Identifer
                 kind = SyntaxKind.IdentifierToken;
                 value = ScanIdentifier(ch);
-                
+
                 // Determine if identifier is a keyword
+                SyntaxKind keywordKind;
+                _keywordKindMap.TryGetValue((string)value, out keywordKind);
+                if (keywordKind != SyntaxKind.None)
+                {
+                    kind = keywordKind;
+                }
             }
             else if (ch == '"')
             {
