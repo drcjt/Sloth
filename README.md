@@ -1,8 +1,7 @@
 # Sloth Compiler in C&#35;
 
 This is a reimagination of the "Good for Nothing" Compiler presented by Joel Pobar and Joe Duffy at PDC from 2005 using 
-ideas from the Roslyn C#/VB compilers. For details on the original compiler see 
-https://blogs.msdn.microsoft.com/joelpob/2005/10/04/good-for-nothing-compiler-pdc-tln410-and-other-goodies/
+ideas from the Roslyn C#/VB compilers. For details on the original compiler see [here](https://blogs.msdn.microsoft.com/joelpob/2005/10/04/good-for-nothing-compiler-pdc-tln410-and-other-goodies/)
 
 The key ideas here are to 
 
