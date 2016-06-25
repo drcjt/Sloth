@@ -39,15 +39,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="InternalUtilities\StackGuard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Syntax\InternalSyntax\InternalNode.cs" />
+    <Compile Include="Syntax\InternalSyntax\LanguageParser.cs" />
     <Compile Include="Syntax\InternalSyntax\Lexer.cs" />
+    <Compile Include="Syntax\InternalSyntax\MissingToken.cs" />
     <Compile Include="Syntax\InternalSyntax\SyntaxFactory.cs" />
     <Compile Include="Syntax\InternalSyntax\SyntaxIdentifier.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxList.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxListBuilder.cs" />
     <Compile Include="Syntax\InternalSyntax\SyntaxNode.cs" />
     <Compile Include="Syntax\InternalSyntax\SyntaxToken.cs" />
     <Compile Include="Syntax\InternalSyntax\SyntaxTokenWithValue.cs" />
     <Compile Include="Syntax\InternalSyntax\SyntaxTrivia.cs" />
+    <Compile Include="Syntax\InternalSyntax\SyntaxTypes.cs" />
     <Compile Include="Syntax\SyntaxFactory.cs" />
     <Compile Include="Syntax\SyntaxKind.cs" />
     <Compile Include="Syntax\SyntaxKindFacts.cs" />

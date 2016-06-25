@@ -62,11 +62,13 @@
         public SyntaxToken Identifier { get; }
     }
 
+    /*
     public class ReadStringSyntax : StatementSyntax
     {
         public SyntaxToken ReadStringKeyword { get; }
         public SyntaxToken Identifier { get; }
     }
+    */
 
     public class SequenceSyntax : StatementSyntax
     {

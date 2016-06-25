@@ -23,7 +23,5 @@
 
         public virtual string GetLeadingTrivia() { return string.Empty; }
         public virtual string GetTrailingTrivia() { return string.Empty; }
-
-        // Need children
     }
 }

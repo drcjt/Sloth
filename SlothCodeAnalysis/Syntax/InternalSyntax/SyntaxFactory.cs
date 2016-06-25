@@ -51,5 +51,25 @@
         {
             return new SyntaxTokenWithValue<T>(kind, text, value, leading, trailing);
         }
+
+        public static EmptyStatementSyntax EmptyStatement(SyntaxToken semicolonToken)
+        {
+            return new EmptyStatementSyntax(SyntaxKind.EmptyStatement, semicolonToken);
+        }
+
+        internal static SyntaxToken MissingToken(SyntaxKind kind)
+        {
+            return SyntaxToken.CreateMissing(kind, string.Empty, string.Empty);
+        }
+
+        public static CompilationUnitSyntax CompilationUnit(SyntaxList<StatementSyntax> statements, SyntaxToken endOfFileToken)
+        {
+            return new CompilationUnitSyntax(SyntaxKind.CompilationUnit, statements, endOfFileToken);
+        }
+
+        public static PrintStatementSyntax PrintStatement(SyntaxToken printKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken)
+        {
+            return new PrintStatementSyntax(SyntaxKind.PrintStatement, printKeyword, expression, semicolonToken);
+        }
     }
 }

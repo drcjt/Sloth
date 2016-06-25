@@ -39,5 +39,27 @@ namespace SlothCodeAnalysis.Syntax
         {
             return new SyntaxToken(InternalSyntax.SyntaxFactory.Literal(value));
         }
+
+        private static InternalSyntax.Lexer MakeLexer(string text)
+        {
+            return new InternalSyntax.Lexer(text);
+        }
+
+        private static InternalSyntax.LanguageParser MakeParser(InternalSyntax.Lexer lexer)
+        {
+            return new InternalSyntax.LanguageParser(lexer);
+        }
+
+        public static void ParseCompilationUnit(string text)
+        {
+            using (var lexer = MakeLexer(text))
+            {
+                using (var parser = MakeParser(lexer))
+                {
+                    var node = parser.ParseCompilationUnit();
+                    // return node.CreateRed();
+                }
+            }
+        }
     }
 }

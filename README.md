@@ -16,30 +16,25 @@ inputs/outputs and a for-loop.
 This is the language specification defined in a simple EBNF style:
 
 ```
-<stmt> := var <ident> = <expr>
-	| <ident> = <expr>
-	| for <ident> = <expr> to <expr> do <stmt> end
-	| read_int <ident>
-	| print <expr>
-	| <stmt> ; <stmt>
+<prgm> := <stmt>+
+<stmt> := 'var' <ident> '=' <expr> ;
+	| <ident> '=' <expr> ;
+	| 'for' <ident> '=' <expr> 'to' <expr> 'do' <stmt> 'end' ;
+	| 'read_int' <ident> ;
+	| 'print' <expr> ;
 
-<expr> := <string>
+<expr> := <add_expr> ( ('+' | '-') <add_expr>)* 
+<add_expr> := <primary_expr> ( ('*' | '/') <primary_expr)*
+<primary_expr> := <string>
 	| <int>
-	| <arith_expr>
 	| <ident>
 
-<arith_expr> := <expr> <arith_op> <expr>
-<arith_op> := + | - | * | /
-
-<ident> := <char> <ident_rest>*
-<ident_rest> := <char> | <digit>
-
-<int> := <digit>+
-<digit> := 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
-
-<string> := " <string_elem>* "
-<string_elem> := <any char other than ">
+<ident> := ('a' .. 'z' | 'A' .. 'Z' | '_') ('a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_')*
+<int> := ('0' .. '9') +
+<string> := '"' ( <esc_seq> | ~('\\' | '"') )* '"'
+<esc_seq> := '\\' ('b'|'t'|'n'|'f'|'r'|'\"'|'\''|'\\')
 ```
+
 ##Sample Programs##
 A simple program could look like this:
 ```

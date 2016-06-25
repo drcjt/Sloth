@@ -59,5 +59,10 @@
         {
             return _trailingTrivia;
         }
+
+        internal static SyntaxToken CreateMissing(SyntaxKind kind, string leading, string trailing)
+        {
+            return new MissingToken(kind, leading, trailing);
+        }
     }
 }

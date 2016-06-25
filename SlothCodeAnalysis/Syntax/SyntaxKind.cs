@@ -3,6 +3,7 @@
     public enum SyntaxKind
     {
         None = 0,
+        List = 1,
 
         // Punctuation
         SemicolonToken = 1000,
@@ -39,11 +40,15 @@
         ReadIntStatemt = 6002,
         AssignmentStatement = 6003,
         VariableDeclaration = 6004,
+        EmptyStatement = 6005,
 
         // Jump Statements
         ForStatement = 7000,
 
+        // Declarations
+        CompilationUnit = 8000,
+
         // Other
-        EndOfFileToken = 8000,
+        EndOfFileToken = 9000,
     }
 }
