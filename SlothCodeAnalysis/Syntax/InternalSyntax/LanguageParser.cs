@@ -139,7 +139,7 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
             {
                 case SyntaxKind.PrintKeyword:
                     return ParsePrintStatement();
-                case SyntaxKind.VariableDeclaration:
+                case SyntaxKind.VarKeyword:
                     return ParseVariableDeclaration();
                 case SyntaxKind.ReadIntKeyword:
                     return ParseReadIntStatement();
