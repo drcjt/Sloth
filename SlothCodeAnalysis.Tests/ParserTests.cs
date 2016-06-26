@@ -14,7 +14,7 @@ namespace SlothCodeAnalysis.Tests
         [Test]
         public void TestParsePrintStatement()
         {
-            var text = "print 3;";
+            var text = "print 3 + 4 * 5;";
             SyntaxFactory.ParseCompilationUnit(text);
         }
     }

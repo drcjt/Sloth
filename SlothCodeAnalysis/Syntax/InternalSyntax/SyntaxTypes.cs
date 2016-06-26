@@ -30,13 +30,13 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
         }
     }
 
-    internal class VariableSyntax : ExpressionSyntax
+    internal class IdentifierNameSyntax : ExpressionSyntax
     {
-        internal readonly SyntaxToken _variableIdentifier;
+        internal readonly SyntaxToken _identifier;
 
-        internal VariableSyntax(SyntaxKind kind, SyntaxToken variableIdentifier) : base(kind)
+        internal IdentifierNameSyntax(SyntaxKind kind, SyntaxToken identifier) : base(kind)
         {
-            _variableIdentifier = variableIdentifier;
+            _identifier = identifier;
         }
     }
 
@@ -60,13 +60,15 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
         internal readonly SyntaxToken _identifier;
         internal readonly SyntaxToken _equalsToken;
         internal readonly ExpressionSyntax _expression;
+        internal readonly SyntaxToken _semicolonToken;
 
-        internal VariableDeclarationSyntax(SyntaxKind kind, SyntaxToken varKeyword, SyntaxToken identifier, SyntaxToken equalsToken, ExpressionSyntax expression) : base(kind)
+        internal VariableDeclarationSyntax(SyntaxKind kind, SyntaxToken varKeyword, SyntaxToken identifier, SyntaxToken equalsToken, ExpressionSyntax expression, SyntaxToken semicolonToken) : base(kind)
         {
             _varKeyword = varKeyword;
             _identifier = identifier;
             _equalsToken = equalsToken;
-            _expression = expression;                 
+            _expression = expression;
+            _semicolonToken = semicolonToken;
         }
     }
 
@@ -75,12 +77,14 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
         internal readonly SyntaxToken _identifier;
         internal readonly SyntaxToken _equalsToken;
         internal readonly ExpressionSyntax _expression;
+        internal readonly SyntaxToken _semicolonToken;
 
-        internal AssignmentSyntax(SyntaxKind kind, SyntaxToken identifier, SyntaxToken equalsToken, ExpressionSyntax expression) : base(kind)
+        internal AssignmentSyntax(SyntaxKind kind, SyntaxToken identifier, SyntaxToken equalsToken, ExpressionSyntax expression, SyntaxToken semicolonToken) : base(kind)
         {
             _identifier = identifier;
             _equalsToken = equalsToken;
             _expression = expression;
+            _semicolonToken = semicolonToken;
         }
     }
 
@@ -93,10 +97,11 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
         internal readonly SyntaxToken _toKeyword;
         internal readonly ExpressionSyntax _upper;
         internal readonly SyntaxToken _doKeyword;
-        internal readonly StatementSyntax _statement;
+        internal readonly SyntaxList<StatementSyntax> _statements;
         internal readonly SyntaxToken _endKeyword;
+        internal readonly SyntaxToken _semicolonToken;
 
-        internal ForStatementSyntax(SyntaxKind kind, SyntaxToken forKeyword, SyntaxToken identifier, SyntaxToken equalsToken, ExpressionSyntax lower, SyntaxToken toKeyword, ExpressionSyntax upper, SyntaxToken doKeyword, StatementSyntax statement, SyntaxToken endKeyword) : base(kind)
+        internal ForStatementSyntax(SyntaxKind kind, SyntaxToken forKeyword, SyntaxToken identifier, SyntaxToken equalsToken, ExpressionSyntax lower, SyntaxToken toKeyword, ExpressionSyntax upper, SyntaxToken doKeyword, SyntaxList<StatementSyntax> statements, SyntaxToken endKeyword, SyntaxToken semicolonToken) : base(kind)
         {
             _forKeyword = forKeyword;
             _identifier = identifier;
@@ -105,8 +110,9 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
             _toKeyword = toKeyword;
             _upper = upper;
             _doKeyword = doKeyword;
-            _statement = statement;
+            _statements = statements;
             _endKeyword = endKeyword;
+            _semicolonToken = semicolonToken;
         }
     }
 
@@ -114,11 +120,13 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
     {
         internal SyntaxToken _readIntKeyword;
         internal SyntaxToken _identifier;
+        internal SyntaxToken _semicolonToken;
 
-        internal ReadIntSyntax(SyntaxKind kind, SyntaxToken readIntKeyword, SyntaxToken identifier) : base(kind)
+        internal ReadIntSyntax(SyntaxKind kind, SyntaxToken readIntKeyword, SyntaxToken identifier, SyntaxToken semicolonToken) : base(kind)
         {
             _readIntKeyword = readIntKeyword;
             _identifier = identifier;
+            _semicolonToken = semicolonToken;
         }
     }
 
@@ -135,18 +143,6 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
         }
     }
     */
-
-    internal class SequenceSyntax : StatementSyntax
-    {
-        internal StatementSyntax _first;
-        internal StatementSyntax _second;
-
-        internal SequenceSyntax(SyntaxKind kind, StatementSyntax first, StatementSyntax second) : base(kind)
-        {
-            _first = first;
-            _second = second;
-        }
-    }
 
     internal class PrintStatementSyntax : StatementSyntax
     {

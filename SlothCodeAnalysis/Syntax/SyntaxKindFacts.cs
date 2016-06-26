@@ -1,7 +1,42 @@
 ﻿namespace SlothCodeAnalysis.Syntax
 {
-    public static class SyntaxKindFacts
+    public static class SyntaxFacts
     {
+        public static bool IsBinaryExpression(SyntaxKind token)
+        {
+            return GetBinaryExpression(token) != SyntaxKind.None;
+        }
+
+        public static SyntaxKind GetBinaryExpression(SyntaxKind token)
+        {
+            switch (token)
+            {
+                case SyntaxKind.PlusToken:
+                    return SyntaxKind.AddExpression;
+                case SyntaxKind.MinusToken:
+                    return SyntaxKind.SubtractExpression;
+                case SyntaxKind.AsteriskToken:
+                    return SyntaxKind.MultiplyExpression;
+                case SyntaxKind.SlashToken:
+                    return SyntaxKind.DivideExpression;
+                default:
+                    return SyntaxKind.None;
+            }
+        }
+
+        public static SyntaxKind GetLiteralExpression(SyntaxKind token)
+        {
+            switch (token)
+            {
+                case SyntaxKind.StringLiteralToken:
+                    return SyntaxKind.StringLiteralExpression;
+                case SyntaxKind.NumericLiteralToken:
+                    return SyntaxKind.NumericLiteralExpression;
+                default:
+                    return SyntaxKind.None;
+            }
+        }
+
         public static string GetText(SyntaxKind kind)
         {
             switch (kind)

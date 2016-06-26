@@ -32,7 +32,18 @@
         EndOfLineTrivia = 4000,
         WhitespaceTrivia = 4001,
 
-        // Expressions
+        // Names
+        IdentifierName = 4500,
+
+        // Binary expressions
+        AddExpression = 5000,
+        SubtractExpression = 5001,
+        MultiplyExpression = 5002,
+        DivideExpression = 5003,
+
+        // Primary expressions
+        NumericLiteralExpression = 5500,
+        StringLiteralExpression = 5501,
 
         // Statements
         Block = 6000,

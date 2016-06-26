@@ -12,11 +12,11 @@
             _trailingTrivia = trailingTrivia ?? null;
         }
 
-        public SyntaxToken(SyntaxKind kind) : base(kind, SyntaxKindFacts.GetText(kind).Length)
+        public SyntaxToken(SyntaxKind kind) : base(kind, SyntaxFacts.GetText(kind).Length)
         {
         }
 
-        public SyntaxToken(SyntaxKind kind, string leadingTrivia, string trailingTrivia) : base(kind, SyntaxKindFacts.GetText(kind).Length)
+        public SyntaxToken(SyntaxKind kind, string leadingTrivia, string trailingTrivia) : base(kind, SyntaxFacts.GetText(kind).Length)
         {
             _leadingTrivia = leadingTrivia ?? null;
             _trailingTrivia = trailingTrivia ?? null;
@@ -26,7 +26,7 @@
 
         public virtual string Text
         {
-            get { return SyntaxKindFacts.GetText(Kind); }
+            get { return SyntaxFacts.GetText(Kind); }
         }
 
         public override string ToString()
