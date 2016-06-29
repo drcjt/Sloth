@@ -50,14 +50,14 @@ namespace SlothCodeAnalysis.Syntax
             return new InternalSyntax.LanguageParser(lexer);
         }
 
-        public static void ParseCompilationUnit(string text)
+        public static CompilationUnitSyntax ParseCompilationUnit(string text)
         {
             using (var lexer = MakeLexer(text))
             {
                 using (var parser = MakeParser(lexer))
                 {
                     var node = parser.ParseCompilationUnit();
-                    // return node.CreateRed();
+                    return (CompilationUnitSyntax)node.CreateRedNode();
                 }
             }
         }

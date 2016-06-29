@@ -90,7 +90,7 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 
         internal CompilationUnitSyntax ParseCompilationUnit()
         {
-            return ParseWithStackGuard(ParseCompilationUnitCore, () => SyntaxFactory.CompilationUnit(new SyntaxList<StatementSyntax>(), SyntaxFactory.Token(SyntaxKind.EndOfFileToken)));
+            return ParseWithStackGuard(ParseCompilationUnitCore, () => SyntaxFactory.CompilationUnit(new SyntaxList<StatementSyntax>(new SyntaxList()), SyntaxFactory.Token(SyntaxKind.EndOfFileToken)));
         }
 
         internal CompilationUnitSyntax ParseCompilationUnitCore()

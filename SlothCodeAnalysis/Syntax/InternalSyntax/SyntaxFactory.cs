@@ -66,7 +66,7 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 
         public static CompilationUnitSyntax CompilationUnit(SyntaxList<StatementSyntax> statements, SyntaxToken endOfFileToken)
         {
-            return new CompilationUnitSyntax(SyntaxKind.CompilationUnit, statements, endOfFileToken);
+            return new CompilationUnitSyntax(SyntaxKind.CompilationUnit, statements.List, endOfFileToken);
         }
 
         public static PrintStatementSyntax PrintStatement(SyntaxToken printKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken)
@@ -86,7 +86,7 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 
         public static ForStatementSyntax For(SyntaxToken forKeyword, SyntaxToken identifier, SyntaxToken equalsToken, ExpressionSyntax lower, SyntaxToken toKeyword, ExpressionSyntax upper, SyntaxToken doKeyword, SyntaxList<StatementSyntax> body, SyntaxToken endKeyword, SyntaxToken semicolonToken)
         {
-            return new ForStatementSyntax(SyntaxKind.ForKeyword, forKeyword, identifier, equalsToken, lower, toKeyword, upper, doKeyword, body, endKeyword, semicolonToken);
+            return new ForStatementSyntax(SyntaxKind.ForKeyword, forKeyword, identifier, equalsToken, lower, toKeyword, upper, doKeyword, body.List, endKeyword, semicolonToken);
         }
 
         public static AssignmentSyntax Assignment(SyntaxToken identifier, SyntaxToken equalsToken, ExpressionSyntax expression, SyntaxToken semicolonToken)

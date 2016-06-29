@@ -1,4 +1,7 @@
-﻿namespace SlothCodeAnalysis.Syntax.InternalSyntax
+﻿using SlothCodeAnalysis.InternalUtilities;
+using System;
+
+namespace SlothCodeAnalysis.Syntax.InternalSyntax
 {
     internal class SyntaxToken : SyntaxNode
     {
@@ -6,7 +9,7 @@
         {
         }
 
-        public SyntaxToken(SyntaxKind kind, int fullWidth, string leadingTrivia, string trailingTrivia) : base(kind, fullWidth)
+        public SyntaxToken(SyntaxKind kind, int fullWidth, string leadingTrivia, string trailingTrivia) : base(kind, (leadingTrivia?.Length ?? 0) + fullWidth + (trailingTrivia?.Length ?? 0) )
         {
             _leadingTrivia = leadingTrivia ?? null;
             _trailingTrivia = trailingTrivia ?? null;
@@ -16,7 +19,7 @@
         {
         }
 
-        public SyntaxToken(SyntaxKind kind, string leadingTrivia, string trailingTrivia) : base(kind, SyntaxFacts.GetText(kind).Length)
+        public SyntaxToken(SyntaxKind kind, string leadingTrivia, string trailingTrivia) : base(kind, (leadingTrivia?.Length ?? 0) + SyntaxFacts.GetText(kind).Length + (trailingTrivia?.Length ?? 0))
         {
             _leadingTrivia = leadingTrivia ?? null;
             _trailingTrivia = trailingTrivia ?? null;
@@ -63,6 +66,16 @@
         internal static SyntaxToken CreateMissing(SyntaxKind kind, string leading, string trailing)
         {
             return new MissingToken(kind, leading, trailing);
+        }
+
+        internal override RedNode CreateRedNode(RedNode parent, int position)
+        {
+            throw ExceptionUtilities.Unreachable;
+        }
+
+        internal override GreenNode GetSlot(int index)
+        {
+            throw ExceptionUtilities.Unreachable;
         }
     }
 }

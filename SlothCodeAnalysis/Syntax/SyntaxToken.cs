@@ -4,9 +4,17 @@ namespace SlothCodeAnalysis.Syntax
 {
     public class SyntaxToken
     {
-        internal InternalNode Node { get; }
+        internal GreenNode Node { get; }
+        internal int Position { get; }
 
-        internal SyntaxToken(InternalNode token)
+        internal SyntaxToken(SyntaxNode parent, InternalSyntax.GreenNode token, int position)
+        {
+            Parent = parent;
+            Node = token;
+            Position = position;
+        }
+
+        internal SyntaxToken(GreenNode token)
         {
             Node = token;
         }

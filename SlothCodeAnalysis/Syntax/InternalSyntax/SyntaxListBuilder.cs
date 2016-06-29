@@ -88,7 +88,7 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
             // Copy nodes to ensure created syntax list is immutable and not sharing the nodes
             var tmp = new TNode[Count];
             Array.Copy(_nodes, tmp, Count);
-            return new SyntaxList<TNode>(tmp);
+            return new SyntaxList<TNode>(new SyntaxList(tmp));
         }
     }
 }

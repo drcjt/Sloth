@@ -1,5 +1,7 @@
 ﻿namespace SlothCodeAnalysis.Syntax.InternalSyntax
 {
+    // Not using this yet - just using simple strings for trivia
+    /*
     internal class SyntaxTrivia : SyntaxNode
     {
         internal readonly string Text;
@@ -9,4 +11,5 @@
             Text = text;
         }
     }
+    */
 }

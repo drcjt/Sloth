@@ -1,6 +1,6 @@
 ﻿namespace SlothCodeAnalysis.Syntax.InternalSyntax
 {
-    internal abstract class SyntaxNode : InternalNode
+    internal abstract class SyntaxNode : GreenNode
     {
         internal SyntaxNode(SyntaxKind kind) : base(kind)
         {

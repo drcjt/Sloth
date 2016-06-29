@@ -18,6 +18,10 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
         internal SyntaxList(SyntaxNode[] nodes) : base(SyntaxKind.List)
         {
             _children = nodes;
+            for (int i = 0; i < _children.Length; i++)
+            {
+                AdjustWidth(_children[i]);
+            }
         }
 
         internal static SyntaxNode List(SyntaxNode[] nodes)
@@ -32,32 +36,46 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
                 return _children[index];
             }
         }
+
+        internal override GreenNode GetSlot(int index)
+        {
+            return _children[index];
+        }
+
+        internal int GetCount()
+        {
+            return _children.Length;
+        }
+
+        internal override RedNode CreateRedNode(RedNode parent, int position)
+        {
+            return new SlothCodeAnalysis.Syntax.SyntaxList(this, parent, position);
+        }
     }
 
     // Immutable list of typed syntax nodes
-    internal class SyntaxList<TNode> : SyntaxNode where TNode : SyntaxNode
+    internal class SyntaxList<TNode> where TNode : SyntaxNode
     {
-        internal readonly TNode[] _children;
+        private readonly SyntaxList _list;
 
-        internal SyntaxList() : base(SyntaxKind.List)
+        internal SyntaxList(SyntaxList list)
         {
+            _list = list;
         }
 
-        internal SyntaxList(TNode[] nodes) : base(SyntaxKind.List)
-        {
-            _children = nodes;
-        }
-
-        internal static SyntaxNode List(SyntaxNode[] nodes)
-        {
-            return new SyntaxList(nodes);
-        }
-
-        public SyntaxNode this[int index]
+        internal SyntaxList List
         {
             get
             {
-                return _children[index];
+                return _list;
+            }
+        }
+
+        public TNode this[int index]
+        {
+            get
+            {
+                return (TNode)_list[index];
             }
         }
     }

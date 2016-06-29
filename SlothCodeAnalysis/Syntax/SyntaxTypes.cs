@@ -1,65 +1,192 @@
 ﻿namespace SlothCodeAnalysis.Syntax
 {
-    public class StatementSyntax
+    public abstract class StatementSyntax : SyntaxNode
     {
-
+        internal StatementSyntax(InternalSyntax.SyntaxNode green, RedNode parent, int position) : base(green, parent, position)
+        {
+        }
     }
 
-    public class ExpressionSyntax
+    public abstract class ExpressionSyntax : SyntaxNode
     {
-
+        internal ExpressionSyntax(InternalSyntax.SyntaxNode green, RedNode parent, int position) : base(green, parent, position)
+        {
+        }
     }
 
     public class LiteralExpressionSyntax : ExpressionSyntax
     {
-        public SyntaxToken Token { get; }
+        internal LiteralExpressionSyntax(InternalSyntax.SyntaxNode green, RedNode parent, int position) : base(green, parent, position)
+        {
+        }
+
+        public SyntaxToken Token
+        {
+            get { return new SyntaxToken(this, ((InternalSyntax.LiteralExpressionSyntax)GreenNode).Token, Position); }
+        }
     }
 
-    public class VariableSyntax : ExpressionSyntax
+    public class IdentifierNameSyntax : ExpressionSyntax
     {
-        public SyntaxToken VariableIdentifier { get; }
+        internal IdentifierNameSyntax(InternalSyntax.SyntaxNode green, RedNode parent, int position) : base(green, parent, position)
+        {
+        }
+
+        public SyntaxToken Identifier
+        {
+            get { return new SyntaxToken(this, ((InternalSyntax.IdentifierNameSyntax)GreenNode).Identifier, Position); }
+        }
     }
 
     public class BinaryExpressionSyntax : ExpressionSyntax
     {
+        private ExpressionSyntax _left;
+        private ExpressionSyntax _right;
 
-        public ExpressionSyntax Left { get; }
-        public SyntaxToken OperatorToken { get; }
-        public ExpressionSyntax Right { get; }
+        internal BinaryExpressionSyntax(InternalSyntax.SyntaxNode green, RedNode parent, int position) : base(green, parent, position)
+        {
+        }
+
+        public ExpressionSyntax Left
+        {
+            get { return GetRed(ref _left, 0); }
+        }
+
+        public SyntaxToken OperatorToken
+        {
+            get { return new SyntaxToken(this, ((InternalSyntax.BinaryExpressionSyntax)GreenNode).OperatorToken, GetChildPosition(1)); }
+        }
+
+        public ExpressionSyntax Right
+        {
+            get { return GetRed(ref _right, 2); }
+        }
     }
 
     public class VariableDeclarationSyntax : StatementSyntax
     {
-        public SyntaxToken VarToken { get; }
-        public SyntaxToken Identifier { get; }
-        public SyntaxToken EqualsToken { get; }
-        public ExpressionSyntax Expression { get; }
+        private ExpressionSyntax _expression;
+
+        internal VariableDeclarationSyntax(InternalSyntax.SyntaxNode green, RedNode parent, int position) : base(green, parent, position)
+        {
+        }
+
+        public SyntaxToken VarToken
+        {
+            get { return new SyntaxToken(this, ((InternalSyntax.VariableDeclarationSyntax)GreenNode)._varKeyword, GetChildPosition(0)); }
+        }
+
+        public SyntaxToken Identifier
+        {
+            get { return new SyntaxToken(this, ((InternalSyntax.VariableDeclarationSyntax)GreenNode)._identifier, GetChildPosition(1)); }
+        }
+
+        public SyntaxToken EqualsToken
+        {
+            get { return new SyntaxToken(this, ((InternalSyntax.VariableDeclarationSyntax)GreenNode)._equalsToken, GetChildPosition(2)); }
+        }
+
+        public ExpressionSyntax Expression
+        {
+            get { return GetRed(ref _expression, 3); }
+        }
     }
 
     public class AssignmentSyntax : StatementSyntax
     {
-        public SyntaxToken Identifier { get; }
-        public SyntaxToken EqualsToken { get; }
-        public ExpressionSyntax Expression { get; }
+        private ExpressionSyntax _expression;
+
+        internal AssignmentSyntax(InternalSyntax.SyntaxNode green, RedNode parent, int position) : base(green, parent, position)
+        {
+        }
+
+        public SyntaxToken Identifier
+        {
+            get { return new SyntaxToken(this, ((InternalSyntax.AssignmentSyntax)GreenNode)._identifier, GetChildPosition(0)); }
+        }
+
+        public SyntaxToken EqualsToken
+        {
+            get { return new SyntaxToken(this, ((InternalSyntax.AssignmentSyntax)GreenNode)._equalsToken, GetChildPosition(1)); }
+        }
+
+        public ExpressionSyntax Expression
+        {
+            get { return GetRed(ref _expression, 2); }
+        }
     }
 
-    public class ForStatementSyntax
+    public class ForStatementSyntax : StatementSyntax
     {
-        public SyntaxToken ForKeyword { get; }
-        public SyntaxToken Identifier { get; }
-        public SyntaxToken EqualsToken { get; }
-        public ExpressionSyntax Lower { get; }
-        public SyntaxToken ToKeyword { get; }
-        public ExpressionSyntax Upper { get; }
-        public SyntaxToken DoKeyword { get; }
-        public StatementSyntax Statement { get; }
-        public SyntaxToken EndKeyword { get; }
+        private ExpressionSyntax _lower;
+        private ExpressionSyntax _upper;
+        private SyntaxList _statements;
+
+        internal ForStatementSyntax(InternalSyntax.SyntaxNode green, RedNode parent, int position) : base(green, parent, position)
+        {
+        }
+
+        public SyntaxToken ForKeyword
+        {
+            get { return new SyntaxToken(this, ((InternalSyntax.ForStatementSyntax)GreenNode)._forKeyword, GetChildPosition(0)); }
+        }
+
+        public SyntaxToken Identifier
+        {
+            get { return new SyntaxToken(this, ((InternalSyntax.ForStatementSyntax)GreenNode)._identifier, GetChildPosition(1)); }
+        }
+
+        public SyntaxToken EqualsToken
+        {
+            get { return new SyntaxToken(this, ((InternalSyntax.ForStatementSyntax)GreenNode)._equalsToken, GetChildPosition(2)); }
+        }
+
+        public ExpressionSyntax Lower
+        {
+            get { return GetRed(ref _lower, 3); }
+        }
+
+        public SyntaxToken ToKeyword
+        {
+            get { return new SyntaxToken(this, ((InternalSyntax.ForStatementSyntax)GreenNode)._toKeyword, GetChildPosition(4)); }
+        }
+
+        public ExpressionSyntax Upper
+        {
+            get { return GetRed(ref _upper, 5); }
+        }
+
+        public SyntaxToken DoKeyword
+        {
+            get { return new SyntaxToken(this, ((InternalSyntax.ForStatementSyntax)GreenNode)._doKeyword, GetChildPosition(6)); }
+        }
+
+        public SyntaxList<StatementSyntax> Statements
+        {
+            get { return new SyntaxList<StatementSyntax>(GetRed(ref _statements, 7)); }
+        }
+
+        public SyntaxToken EndKeyword
+        {
+            get { return new SyntaxToken(this, ((InternalSyntax.ForStatementSyntax)GreenNode)._endKeyword, GetChildPosition(8)); }
+        }
     }
 
     public class ReadIntSyntax : StatementSyntax
     {
-        public SyntaxToken ReadIntKeyword { get; }
-        public SyntaxToken Identifier { get; }
+        internal ReadIntSyntax(InternalSyntax.SyntaxNode green, RedNode parent, int position) : base(green, parent, position)
+        {
+        }
+
+        public SyntaxToken ReadIntKeyword
+        {
+            get { return new SyntaxToken(this, ((InternalSyntax.ReadIntSyntax)GreenNode)._readIntKeyword, GetChildPosition(0)); }
+        }
+
+        public SyntaxToken Identifier
+        {
+            get { return new SyntaxToken(this, ((InternalSyntax.ReadIntSyntax)GreenNode)._identifier, GetChildPosition(1)); }
+        }
     }
 
     /*
@@ -70,15 +197,53 @@
     }
     */
 
-    public class SequenceSyntax : StatementSyntax
-    {
-        public StatementSyntax First { get; }
-        public StatementSyntax Second { get; }
-    }
-
     public class PrintStatementSyntax : StatementSyntax
     {
-        public SyntaxToken PrintKeyword { get; }
-        public ExpressionSyntax Expression { get; }
+        private ExpressionSyntax _expression;
+
+        internal PrintStatementSyntax(InternalSyntax.SyntaxNode green, RedNode parent, int position) : base(green, parent, position)
+        {
+        }
+
+        public SyntaxToken PrintKeyword
+        {
+            get { return new SyntaxToken(this, ((InternalSyntax.PrintStatementSyntax)GreenNode)._printKeyword, GetChildPosition(0)); }
+        }
+
+        public ExpressionSyntax Lower
+        {
+            get { return GetRed(ref _expression, 1); }
+        }
+    }
+
+    public class EmptyStatementSyntax : StatementSyntax
+    {
+        internal EmptyStatementSyntax(InternalSyntax.SyntaxNode green, RedNode parent, int position) : base(green, parent, position)
+        {
+        }
+
+        public SyntaxToken SemicolonToken
+        {
+            get { return new SyntaxToken(this, ((InternalSyntax.EmptyStatementSyntax)GreenNode).SemicolonToken, GetChildPosition(0)); }
+        }
+    }
+
+    public class CompilationUnitSyntax : SyntaxNode
+    {
+        private SyntaxList _statements;
+
+        internal CompilationUnitSyntax(InternalSyntax.SyntaxNode green, RedNode parent, int position) : base(green, parent, position)
+        {
+        }
+
+        public SyntaxList<StatementSyntax> Statements
+        {
+            get { return new SyntaxList<StatementSyntax>(GetRed(ref _statements, 0)); }
+        }
+
+        public SyntaxToken EndOfFileToken
+        {
+            get { return new SyntaxToken(this, ((InternalSyntax.CompilationUnitSyntax)GreenNode)._endOfFileToken, GetChildPosition(1)); }
+        }
     }
 }
