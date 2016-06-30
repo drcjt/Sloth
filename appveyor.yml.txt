@@ -11,3 +11,10 @@ install:
 build:
   project: Sloth.sln
   verbosity: minimal
+
+after build:
+  7z a slothpad.zip %APPVEYOR_BUILD_FOLDER%\Slothpad\bin\debug\*.dll
+  
+artifacts:
+  - path: slothpad.zip
+    name: SlothPad
