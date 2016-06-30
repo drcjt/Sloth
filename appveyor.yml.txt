@@ -1,0 +1,13 @@
+version: 2.0.{build}
+os: Visual Studio 2015
+
+environment:
+    COVERALLS_REPO_TOKEN:  
+       secure: D3xk3zhufhpC3ZTVEFQT4jGsSmEWWzNJdJsAUu2wK2EARb9Z3LO4Uaubq7HM007j
+
+install:
+    - nuget restore
+
+build:
+  project: Sloth.sln
+  verbosity: minimal
