@@ -1,19 +1,23 @@
 ﻿namespace SlothCodeAnalysis.Syntax
 {
-    public abstract class SyntaxTree
+    public abstract partial class SyntaxTree
     {
-        public abstract string FilePath { get; }
-
-        public abstract int Length { get; }
-
         public static SyntaxTree ParseText(string text)
         {
-            return null;
+            using (var lexer = new InternalSyntax.Lexer(text))
+            {
+                using (var parser = new InternalSyntax.LanguageParser(lexer))
+                {
+                    var compilationUnit = (CompilationUnitSyntax)parser.ParseCompilationUnit().CreateRedNode();
+                    var tree = new ParsedSyntaxTree(text, compilationUnit);
+                    return tree;
+                }
+            }
         }
 
-        public SyntaxNode GetRoot()
-        {
-            return null;
-        }
+        /// <summary>
+        /// Gets the root node of the syntax tree.
+        /// </summary>
+        public abstract SyntaxNode GetRoot();
     }
 }
