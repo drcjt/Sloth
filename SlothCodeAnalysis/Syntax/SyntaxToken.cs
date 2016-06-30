@@ -6,12 +6,14 @@ namespace SlothCodeAnalysis.Syntax
     {
         internal GreenNode Node { get; }
         internal int Position { get; }
+        internal int Index { get; }
 
-        internal SyntaxToken(SyntaxNode parent, InternalSyntax.GreenNode token, int position)
+        internal SyntaxToken(SyntaxNode parent, InternalSyntax.GreenNode token, int position, int index)
         {
             Parent = parent;
             Node = token;
             Position = position;
+            Index = index;
         }
 
         internal SyntaxToken(GreenNode token)

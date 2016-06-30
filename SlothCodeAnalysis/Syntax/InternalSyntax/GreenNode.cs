@@ -1,4 +1,6 @@
-﻿namespace SlothCodeAnalysis.Syntax.InternalSyntax
+﻿using System.Text;
+
+namespace SlothCodeAnalysis.Syntax.InternalSyntax
 {
     // TODO : Consider merging this and SyntaxNode
     internal abstract class GreenNode
@@ -37,5 +39,43 @@
         internal abstract RedNode CreateRedNode(RedNode parent, int position);
 
         internal abstract GreenNode GetSlot(int index);
+
+        public int SlotCount { get; protected set; }
+
+        public bool IsList
+        {
+            get
+            {
+                return Kind == SyntaxKind.List;
+            }
+        }
+
+        public override string ToString()
+        {
+            int n = this.SlotCount;
+            int lastIndex = n - 1;
+            for (; lastIndex >= 0; lastIndex--)
+            {
+                var child = this.GetSlot(lastIndex);
+                if (child != null)
+                {
+                    break;
+                }
+            }
+
+            var sb = new StringBuilder();
+            for (var i = 0; i <= lastIndex; i++)
+            {
+                var child = this.GetSlot(i);
+                if (child != null)
+                {
+                    sb.Append(child.GetLeadingTrivia());
+                    sb.Append(child.ToString());
+                    sb.Append(child.GetTrailingTrivia());
+                }
+            }
+
+            return sb.ToString();
+        }
     }
 }

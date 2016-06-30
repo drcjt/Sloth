@@ -45,7 +45,7 @@ namespace SlothCodeAnalysis.Syntax
             return result;
         }
 
-        internal RedNode GetRedElement(ref RedNode element, int slot)
+        internal T GetRedElement<T>(ref T element, int slot) where T : RedNode
         {
             var result = element;
 
@@ -53,7 +53,7 @@ namespace SlothCodeAnalysis.Syntax
             {
                 var green = GreenNode.GetSlot(slot);
                 // passing list's parent
-                Interlocked.CompareExchange(ref element, green.CreateRedNode(Parent, GetChildPosition(slot)), null);
+                Interlocked.CompareExchange(ref element, (T)green.CreateRedNode(Parent, GetChildPosition(slot)), null);
                 result = element;
             }
 
@@ -80,6 +80,28 @@ namespace SlothCodeAnalysis.Syntax
             }
 
             return this.Position + offset;
+        }
+
+        internal int GetChildIndex(int slot)
+        {
+            int index = 0;
+            for (int i = 0; i < slot; i++)
+            {
+                var item = this.GreenNode.GetSlot(i);
+                if (item != null)
+                {
+                    if (item.IsList)
+                    {
+                        index += item.SlotCount;
+                    }
+                    else
+                    {
+                        index++;
+                    }
+                }
+            }
+
+            return index;
         }
     }
 }

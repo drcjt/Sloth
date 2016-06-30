@@ -22,6 +22,7 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
             {
                 AdjustWidth(_children[i]);
             }
+            SlotCount = _children.Length;
         }
 
         internal static SyntaxNode List(SyntaxNode[] nodes)

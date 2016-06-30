@@ -8,19 +8,24 @@ namespace SlothCodeAnalysis.Syntax
 {
     public class SyntaxList : SyntaxNode
     {
-        private readonly RedNode[] _children;
+        private readonly SyntaxNode[] _children;
 
         internal SyntaxList(SlothCodeAnalysis.Syntax.InternalSyntax.SyntaxList green, RedNode parent, int position) : base(green, parent, position)
         {
-            _children = new RedNode[green.GetCount()];
+            _children = new SyntaxNode[green.GetCount()];
         }
 
-        public RedNode this[int index]
+        public SyntaxNode this[int index]
         {
             get
             {
                 return GetRedElement(ref _children[index], index);
             }
+        }
+
+        internal override SyntaxNode GetNodeSlot(int index)
+        {
+            return this.GetRedElement(ref _children[index], index);
         }
 
         public int Count

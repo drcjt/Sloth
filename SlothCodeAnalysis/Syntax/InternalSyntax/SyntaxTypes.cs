@@ -26,6 +26,7 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 
         internal LiteralExpressionSyntax(SyntaxKind kind, SyntaxToken token) : base(kind)
         {
+            SlotCount = 1;
             _token = token;
             AdjustWidth(_token);
         }
@@ -53,6 +54,7 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 
         internal IdentifierNameSyntax(SyntaxKind kind, SyntaxToken identifier) : base(kind)
         {
+            SlotCount = 1;
             _identifier = identifier;
             AdjustWidth(_identifier);
         }
@@ -83,6 +85,7 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 
         internal BinaryExpressionSyntax(SyntaxKind kind, ExpressionSyntax left, SyntaxToken operatorToken, ExpressionSyntax right) : base(kind)
         {
+            SlotCount = 3;
             _left = left;
             AdjustWidth(_left);
             _operatorToken = operatorToken;
@@ -122,6 +125,7 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 
         internal VariableDeclarationSyntax(SyntaxKind kind, SyntaxToken varKeyword, SyntaxToken identifier, SyntaxToken equalsToken, ExpressionSyntax expression, SyntaxToken semicolonToken) : base(kind)
         {
+            SlotCount = 5;
             _varKeyword = varKeyword;
             AdjustWidth(_varKeyword);
             _identifier = identifier;
@@ -162,6 +166,7 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 
         internal AssignmentSyntax(SyntaxKind kind, SyntaxToken identifier, SyntaxToken equalsToken, ExpressionSyntax expression, SyntaxToken semicolonToken) : base(kind)
         {
+            SlotCount = 4;
             _identifier = identifier;
             AdjustWidth(_identifier);
             _equalsToken = equalsToken;
@@ -206,6 +211,7 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 
         internal ForStatementSyntax(SyntaxKind kind, SyntaxToken forKeyword, SyntaxToken identifier, SyntaxToken equalsToken, ExpressionSyntax lower, SyntaxToken toKeyword, ExpressionSyntax upper, SyntaxToken doKeyword, SyntaxList statements, SyntaxToken endKeyword, SyntaxToken semicolonToken) : base(kind)
         {
+            SlotCount = 10;
             _forKeyword = forKeyword;
             AdjustWidth(_forKeyword);
             _identifier = identifier;
@@ -262,6 +268,7 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 
         internal ReadIntSyntax(SyntaxKind kind, SyntaxToken readIntKeyword, SyntaxToken identifier, SyntaxToken semicolonToken) : base(kind)
         {
+            SlotCount = 3;
             _readIntKeyword = readIntKeyword;
             AdjustWidth(_readIntKeyword);
             _identifier = identifier;
@@ -309,6 +316,7 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 
         internal PrintStatementSyntax(SyntaxKind kind, SyntaxToken printKeyword, ExpressionSyntax expression, SyntaxToken semicolonToken) : base(kind)
         {
+            SlotCount = 3;
             _printKeyword = printKeyword;
             AdjustWidth(_printKeyword);
             _expression = expression;
@@ -342,6 +350,7 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 
         internal EmptyStatementSyntax(SyntaxKind kind, SyntaxToken semicolonToken) : base(kind)
         {
+            SlotCount = 1;
             _semicolonToken = semicolonToken;
             AdjustWidth(_semicolonToken);
         }
@@ -369,6 +378,7 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 
         internal CompilationUnitSyntax(SyntaxKind kind, SyntaxList statements, SyntaxToken endOfFileToken) : base(kind)
         {
+            SlotCount = 2;
             _statements = statements;
             AdjustWidth(_statements);
             _endOfFileToken = endOfFileToken;
