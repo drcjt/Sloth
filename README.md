@@ -1,5 +1,10 @@
 # Sloth Compiler in C&#35;
 
+| | |
+| --- | --- |
+| **Build** | [![Build status](https://img.shields.io/appveyor/ci/drcjt/sloth.svg)](https://ci.appveyor.com/project/drcjt/sloth) |
+[![Build History](https://buildstats.info/appveyor/chart/drcjt/sloth)](https://ci.appveyor.com/project/drcjt/sloth)
+
 This is a reimagination of the "Good for Nothing" Compiler presented by Joel Pobar and Joe Duffy at PDC from 2005 using 
 ideas from the Roslyn C#/VB compilers. For details on the original compiler see [here](https://blogs.msdn.microsoft.com/joelpob/2005/10/04/good-for-nothing-compiler-pdc-tln410-and-other-goodies/)
 

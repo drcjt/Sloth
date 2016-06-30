@@ -8,6 +8,9 @@ environment:
 install:
     - nuget restore
 
+before_build:
+  - nuget restore
+  
 build:
   project: Sloth.sln
   verbosity: minimal
