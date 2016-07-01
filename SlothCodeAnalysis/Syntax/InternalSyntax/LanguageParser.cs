@@ -14,7 +14,7 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
         internal LanguageParser(Lexer lexer)
         {
             _lexer = lexer;
-            _lexedTokens = new SyntaxToken[32];
+            _lexedTokens = new SyntaxToken[1000];
         }
 
         private SyntaxToken[] _lexedTokens;
