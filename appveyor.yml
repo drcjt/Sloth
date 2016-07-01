@@ -13,7 +13,7 @@ build:
   verbosity: minimal
 
 after_build:
-  7z a slothpad.zip %APPVEYOR_BUILD_FOLDER%\Slothpad\bin\debug\*.dll
+  7z a slothpad.zip %APPVEYOR_BUILD_FOLDER%\SlothPad\bin\Debug\*
   
 artifacts:
   - path: slothpad.zip
