@@ -84,9 +84,14 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
             return new ReadIntSyntax(SyntaxKind.ReadIntKeyword, readIntKeyword, identifier, semicolonToken);
         }
 
-        public static ForStatementSyntax For(SyntaxToken forKeyword, SyntaxToken identifier, SyntaxToken equalsToken, ExpressionSyntax lower, SyntaxToken toKeyword, ExpressionSyntax upper, SyntaxToken doKeyword, SyntaxList<StatementSyntax> body, SyntaxToken endKeyword, SyntaxToken semicolonToken)
+        public static BlockSyntax Block(SyntaxList<StatementSyntax> body)
         {
-            return new ForStatementSyntax(SyntaxKind.ForKeyword, forKeyword, identifier, equalsToken, lower, toKeyword, upper, doKeyword, body.List, endKeyword, semicolonToken);
+            return new InternalSyntax.BlockSyntax(SyntaxKind.Block, body.List);
+        }
+
+        public static ForStatementSyntax For(SyntaxToken forKeyword, SyntaxToken identifier, SyntaxToken equalsToken, ExpressionSyntax lower, SyntaxToken toKeyword, ExpressionSyntax upper, SyntaxToken doKeyword, BlockSyntax body, SyntaxToken endKeyword, SyntaxToken semicolonToken)
+        {
+            return new ForStatementSyntax(SyntaxKind.ForKeyword, forKeyword, identifier, equalsToken, lower, toKeyword, upper, doKeyword, body, endKeyword, semicolonToken);
         }
 
         public static AssignmentSyntax Assignment(SyntaxToken identifier, SyntaxToken equalsToken, ExpressionSyntax expression, SyntaxToken semicolonToken)

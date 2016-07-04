@@ -100,6 +100,12 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
             return SyntaxFactory.CompilationUnit(statements, eof);
         }
 
+        internal BlockSyntax ParseBlock()
+        {
+            var statements = ParseStatements();
+            return SyntaxFactory.Block(statements);
+        }
+
         internal SyntaxList<StatementSyntax> ParseStatements()
         {
             var statements = new SyntaxListBuilder<StatementSyntax>();
@@ -190,7 +196,7 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
             var toKeyword = EatToken(SyntaxKind.ToKeyword);
             var upper = ParseExpressionCore();
             var doKeyword = EatToken(SyntaxKind.DoKeyword);
-            var body = ParseStatements();
+            var body = ParseBlock();
             var endKeyword = EatToken(SyntaxKind.EndKeyword);
             var semicolonToken = EatToken(SyntaxKind.SemicolonToken);
 

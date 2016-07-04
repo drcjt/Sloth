@@ -13,9 +13,26 @@
         </Grid.ColumnDefinitions>
 
         <TextBox Grid.Column="0" AcceptsReturn="True" Name="SourceCode"/>
-        <StackPanel Grid.Column="1">
-            <Button Click="Button_Click">Refresh Syntax Tree</Button>
-            <TextBlock Grid.Column="1" Name="AST"/>
-        </StackPanel>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0">
+                <Button Click="Button_Click">Refresh Syntax Tree</Button>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <TreeView Name="ASTTree" SelectedItemChanged="ASTTree_SelectedItemChanged"/>
+                </ScrollViewer>
+            </StackPanel>
+
+            <ListView Grid.Row="1" Name="TreeProperties" SizeChanged="TreeProperties_SizeChanged" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="Value" DisplayMemberBinding="{Binding Value}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
     </Grid>
 </Window>

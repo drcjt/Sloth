@@ -144,11 +144,34 @@
         }
     }
 
+    public class BlockSyntax : StatementSyntax
+    {
+        private SyntaxList _statements;
+
+        internal BlockSyntax(InternalSyntax.SyntaxNode green, RedNode parent, int position) : base(green, parent, position)
+        {
+        }
+
+        public SyntaxList<StatementSyntax> Statements
+        {
+            get { return new SyntaxList<StatementSyntax>(GetRed(ref _statements, 0)); }
+        }
+
+        internal override SyntaxNode GetNodeSlot(int slot)
+        {
+            switch (slot)
+            {
+                case 0: return GetRed(ref _statements, 0);
+                default: return null;
+            }
+        }
+    }
+
     public class ForStatementSyntax : StatementSyntax
     {
         private ExpressionSyntax _lower;
         private ExpressionSyntax _upper;
-        private SyntaxList _statements;
+        private BlockSyntax _body;
 
         internal ForStatementSyntax(InternalSyntax.SyntaxNode green, RedNode parent, int position) : base(green, parent, position)
         {
@@ -189,9 +212,9 @@
             get { return new SyntaxToken(this, ((InternalSyntax.ForStatementSyntax)GreenNode)._doKeyword, GetChildPosition(6), GetChildIndex(6)); }
         }
 
-        public SyntaxList<StatementSyntax> Statements
+        public BlockSyntax Body
         {
-            get { return new SyntaxList<StatementSyntax>(GetRed(ref _statements, 7)); }
+            get { return GetRed(ref _body, 7); }
         }
 
         public SyntaxToken EndKeyword
@@ -205,7 +228,7 @@
             {
                 case 3: return Lower;
                 case 5: return Upper;
-                case 7: return GetRed(ref _statements, 7);
+                case 7: return Body;
                 default: return null;
             }
         }
@@ -227,14 +250,6 @@
             get { return new SyntaxToken(this, ((InternalSyntax.ReadIntSyntax)GreenNode)._identifier, GetChildPosition(1), GetChildIndex(1)); }
         }
     }
-
-    /*
-    public class ReadStringSyntax : StatementSyntax
-    {
-        public SyntaxToken ReadStringKeyword { get; }
-        public SyntaxToken Identifier { get; }
-    }
-    */
 
     public class PrintStatementSyntax : StatementSyntax
     {

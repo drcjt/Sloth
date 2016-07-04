@@ -15,7 +15,7 @@ namespace SlothCodeAnalysis.Syntax
             Depth = depth;
         }
 
-        public virtual void Visit(SyntaxNode node)
+        public virtual void Visit(SyntaxNode node, object data)
         {
             foreach (var child in node.ChildNodesAndTokens())
             {
@@ -23,20 +23,20 @@ namespace SlothCodeAnalysis.Syntax
                 {
                     if (Depth >= SyntaxWalkerDepth.Node)
                     {
-                        Visit(child.AsNode());
+                        Visit(child.AsNode(), data);
                     }
                 }
                 else if (child.IsToken)
                 {
                     if (this.Depth >= SyntaxWalkerDepth.Token)
                     {
-                        VisitToken(child.AsToken());
+                        VisitToken(child.AsToken(), data);
                     }
                 }
             }
         }
 
-        protected virtual void VisitToken(SyntaxToken token)
+        protected virtual void VisitToken(SyntaxToken token, object data)
         {
         }
     }

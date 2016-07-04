@@ -20,8 +20,7 @@
         DoKeyword = 2004,
         EndKeyword = 2005,
         ReadIntKeyword = 2006,
-        ReadStringKeyword = 2007,
-        PrintKeyword = 2008,
+        PrintKeyword = 2007,
 
         // Tokens with Text
         IdentifierToken = 3000,

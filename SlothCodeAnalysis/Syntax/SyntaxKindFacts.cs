@@ -64,8 +64,6 @@
                     return "print";
                 case SyntaxKind.ReadIntKeyword:
                     return "read_int";
-                case SyntaxKind.ReadStringKeyword:
-                    return "read_string";
                 case SyntaxKind.ToKeyword:
                     return "to";
                 case SyntaxKind.VarKeyword:

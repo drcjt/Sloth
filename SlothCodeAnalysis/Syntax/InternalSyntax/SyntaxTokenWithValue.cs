@@ -2,26 +2,26 @@
 {
     internal class SyntaxTokenWithValue<T> : SyntaxToken
     {
-        protected readonly string TextField;
-        protected readonly T ValueField;
+        protected readonly string _textField;
+        protected readonly T _valueField;
 
         internal SyntaxTokenWithValue(SyntaxKind kind, string text, T value) : base(kind, text.Length)
         {
-            TextField = text;
-            ValueField = value;
+            _textField = text;
+            _valueField = value;
         }
 
         internal SyntaxTokenWithValue(SyntaxKind kind, string text, T value, string leadingTrivia, string trailingTrivia) : base(kind, text.Length, leadingTrivia, trailingTrivia)
         {
-            TextField = text;
-            ValueField = value;
+            _textField = text;
+            _valueField = value;
         }
 
         public override string Text
         {
             get
             {
-                return TextField;
+                return _textField;
             }
         }
 
@@ -29,7 +29,7 @@
         {
             get
             {
-                return ValueField;
+                return _valueField;
             }
         }
     }

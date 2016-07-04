@@ -63,9 +63,9 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
             return _trailingTrivia;
         }
 
-        internal static SyntaxToken CreateMissing(SyntaxKind kind, string leading, string trailing)
+        internal static SyntaxToken CreateMissing(SyntaxKind kind, string leadingTrivia, string trailingTrivia)
         {
-            return new MissingToken(kind, leading, trailing);
+            return new MissingToken(kind, leadingTrivia, trailingTrivia);
         }
 
         internal override RedNode CreateRedNode(RedNode parent, int position)

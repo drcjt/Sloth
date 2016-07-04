@@ -28,6 +28,15 @@ namespace SlothCodeAnalysis.Syntax
             }
         }
 
+        public SyntaxKind Kind
+        {
+            get
+            {
+                return GreenNode.Kind;
+            }
+        }
+
+
         internal T GetRed<T>(ref T field, int slot) where T : RedNode
         {
             var result = field;

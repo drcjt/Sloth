@@ -196,6 +196,34 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 
     }
 
+    internal class BlockSyntax : StatementSyntax
+    {
+        internal readonly SyntaxList _statements;
+
+        internal BlockSyntax(SyntaxKind kind, SyntaxList statements) : base(kind)
+        {
+            SlotCount = 1;
+            _statements = statements;
+            AdjustWidth(_statements);
+        }
+
+        public SyntaxList<StatementSyntax> Statements { get { return new SyntaxList<StatementSyntax>(_statements); } }
+
+        internal override RedNode CreateRedNode(RedNode parent, int position)
+        {
+            return new SlothCodeAnalysis.Syntax.BlockSyntax(this, parent, position);
+        }
+
+        internal override GreenNode GetSlot(int index)
+        {
+            switch (index)
+            {
+                case 0: return _statements;
+                default: return null;
+            }
+        }
+    }
+
     internal class ForStatementSyntax : StatementSyntax
     {
         internal readonly SyntaxToken _forKeyword;
@@ -205,11 +233,11 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
         internal readonly SyntaxToken _toKeyword;
         internal readonly ExpressionSyntax _upper;
         internal readonly SyntaxToken _doKeyword;
-        internal readonly SyntaxList _statements;
+        internal readonly BlockSyntax _body;
         internal readonly SyntaxToken _endKeyword;
         internal readonly SyntaxToken _semicolonToken;
 
-        internal ForStatementSyntax(SyntaxKind kind, SyntaxToken forKeyword, SyntaxToken identifier, SyntaxToken equalsToken, ExpressionSyntax lower, SyntaxToken toKeyword, ExpressionSyntax upper, SyntaxToken doKeyword, SyntaxList statements, SyntaxToken endKeyword, SyntaxToken semicolonToken) : base(kind)
+        internal ForStatementSyntax(SyntaxKind kind, SyntaxToken forKeyword, SyntaxToken identifier, SyntaxToken equalsToken, ExpressionSyntax lower, SyntaxToken toKeyword, ExpressionSyntax upper, SyntaxToken doKeyword, BlockSyntax body, SyntaxToken endKeyword, SyntaxToken semicolonToken) : base(kind)
         {
             SlotCount = 10;
             _forKeyword = forKeyword;
@@ -226,15 +254,13 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
             AdjustWidth(_upper);
             _doKeyword = doKeyword;
             AdjustWidth(_doKeyword);
-            _statements = statements;
-            AdjustWidth(_statements);
+            _body = body;
+            AdjustWidth(_body);
             _endKeyword = endKeyword;
             AdjustWidth(_endKeyword);
             _semicolonToken = semicolonToken;
             AdjustWidth(_semicolonToken);
         }
-
-        public SyntaxList<StatementSyntax> Statements { get { return new SyntaxList<StatementSyntax>(_statements); } }
 
         internal override RedNode CreateRedNode(RedNode parent, int position)
         {
@@ -252,8 +278,8 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
                 case 4: return _toKeyword;
                 case 5: return _upper;
                 case 6: return _doKeyword;
-                case 7: return _statements;
-                case 8: return _equalsToken;
+                case 7: return _body;
+                case 8: return _endKeyword;
                 case 9: return _semicolonToken;
                 default: return null;
             }
@@ -293,20 +319,6 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
             }
         }
     }
-
-    /*
-    internal class ReadStringSyntax : StatementSyntax
-    {
-        internal SyntaxToken _readStringKeyword;
-        internal SyntaxToken _identifier;
-
-        internal ReadStringSyntax(SyntaxKind kind, SyntaxToken readStringKeyword, SyntaxToken identifier) : base(kind)
-        {
-            _readStringKeyword = readStringKeyword;
-            _identifier = identifier;
-        }
-    }
-    */
 
     internal class PrintStatementSyntax : StatementSyntax
     {

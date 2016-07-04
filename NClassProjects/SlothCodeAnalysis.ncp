@@ -1,0 +1,271 @@
+<Project>
+  <Name>SlothCodeAnalysis</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Internal Syntax</Name>
+    <Language>CSharp</Language>
+    <Entities>
+      <Entity type="Class">
+        <Name>GreenNode</Name>
+        <Access>Internal</Access>
+        <Location left="558" top="128" />
+        <Size width="300" height="315" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">public int FullWidth { get; private set; }</Member>
+        <Member type="Constructor">protected GreenNode(SyntaxKind kind)</Member>
+        <Member type="Constructor">protected GreenNode(SyntaxKind kind, int fullWidth)</Member>
+        <Member type="Method">protected void AdjustWidth(GreenNode node)</Member>
+        <Member type="Property">public virtual bool IsToken { get; }</Member>
+        <Member type="Method">public virtual object GetValue()</Member>
+        <Member type="Method">public virtual string GetLeadingTrivia()</Member>
+        <Member type="Method">public virtual string GetTrailingTrivia()</Member>
+        <Member type="Method">internal abstract RedNode CreateRedNode(RedNode parent, int position)</Member>
+        <Member type="Method">public RedNode CreateRedNode()</Member>
+        <Member type="Method">internal abstract GreenNode GetSlot(int index)</Member>
+        <Member type="Property">public int SlotCount { get; protected set; }</Member>
+        <Member type="Property">public bool IsList { get; }</Member>
+        <Member type="Method">public override string ToString()</Member>
+        <Modifier>Abstract</Modifier>
+      </Entity>
+      <Entity type="Enum">
+        <Name>SyntaxKind</Name>
+        <Access>Public</Access>
+        <Location left="975" top="151" />
+        <Size width="162" height="673" />
+        <Collapsed>True</Collapsed>
+        <Value>None</Value>
+        <Value>List</Value>
+        <Value>SemicolonToken</Value>
+        <Value>EqualsToken</Value>
+        <Value>PlusToken</Value>
+        <Value>MinusToken</Value>
+        <Value>AsteriskToken</Value>
+        <Value>SlashToken</Value>
+        <Value>VarKeyword</Value>
+        <Value>ForKeyword</Value>
+        <Value>ToKeyword</Value>
+        <Value>DoKeyword</Value>
+        <Value>EndKeyword</Value>
+        <Value>ReadIntKeyword</Value>
+        <Value>PrintKeyword</Value>
+        <Value>IdentifierToken</Value>
+        <Value>NumericLiteralToken</Value>
+        <Value>StringLiteralToken</Value>
+        <Value>EndOfLineTrivia</Value>
+        <Value>WhitespaceTrivia</Value>
+        <Value>IdentifierName</Value>
+        <Value>AddExpression</Value>
+        <Value>SubtractExpression</Value>
+        <Value>MultiplyExpression</Value>
+        <Value>DivideExpression</Value>
+        <Value>NumericLiteralExpression</Value>
+        <Value>StringLiteralExpression</Value>
+        <Value>Block</Value>
+        <Value>PrintStatement</Value>
+        <Value>ReadIntStatement</Value>
+        <Value>AssignmentStatement</Value>
+        <Value>VariableDeclaration</Value>
+        <Value>EmptyStatement</Value>
+        <Value>ForStatement</Value>
+        <Value>CompilationUnit</Value>
+        <Value>EndOfFileToken</Value>
+      </Entity>
+      <Entity type="Class">
+        <Name>SyntaxNode</Name>
+        <Access>Internal</Access>
+        <Location left="541" top="528" />
+        <Size width="338" height="116" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">internal SyntaxNode(SyntaxKind kind)</Member>
+        <Member type="Constructor">internal SyntaxNode(SyntaxKind kind, int fullWidth)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>SyntaxToken</Name>
+        <Access>Internal</Access>
+        <Location left="483" top="755" />
+        <Size width="454" height="349" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">string _leadingTrivia</Member>
+        <Member type="Field">string _trailingTrivia</Member>
+        <Member type="Constructor">public SyntaxToken(SyntaxKind kind, int fullWidth)</Member>
+        <Member type="Constructor">public SyntaxToken(SyntaxKind kind)</Member>
+        <Member type="Constructor">public SyntaxToken(SyntaxKind kind, int fullWidth, string leadingTrivia, string trailingTrivia)</Member>
+        <Member type="Constructor">public SyntaxToken(SyntaxKind kind, string leadingTrivia, string trailingTrivia)</Member>
+        <Member type="Property">public override bool IsToken { get; }</Member>
+        <Member type="Property">public virtual string Text { get; }</Member>
+        <Member type="Method">public override string ToString()</Member>
+        <Member type="Property">public virtual object Value { get; }</Member>
+        <Member type="Method">public override object GetValue()</Member>
+        <Member type="Method">public override string GetLeadingTrivia()</Member>
+        <Member type="Method">public override string GetTrailingTrivia()</Member>
+        <Member type="Method">internal static SyntaxToken CreateMissing(SyntaxKind kind, string leadingTrivia, string trailingTrivia)</Member>
+        <Member type="Method">internal override RedNode CreateRedNode(RedNode parent, int position)</Member>
+        <Member type="Method">internal override GreenNode GetSlot(int index)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>SyntaxIdentifier</Name>
+        <Access>Internal</Access>
+        <Location left="1190" top="925" />
+        <Size width="622" height="145" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">protected readonly string _textField</Member>
+        <Member type="Constructor">internal SyntaxIdentifier(SyntaxKind kind, string text)</Member>
+        <Member type="Constructor">internal SyntaxIdentifier(SyntaxKind kind, string text, string leadingTrivia, string trailingTrivia)</Member>
+        <Member type="Property">public string Text { get; }</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>MissingToken</Name>
+        <Access>Public</Access>
+        <Location left="1190" top="783" />
+        <Size width="584" height="101" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">internal MissingToken(SyntaxKind kind, string leadingTrivia, string trailingTrivia)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>SyntaxTokenWithValue&lt;T&gt;</Name>
+        <Access>Public</Access>
+        <Location left="464" top="1179" />
+        <Size width="492" height="264" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">protected readonly string _textField</Member>
+        <Member type="Field">protected readonly T _valueField</Member>
+        <Member type="Constructor">internal SyntaxTokenWithValue(SyntaxKind kind, string text, T value)</Member>
+        <Member type="Constructor">internal SyntaxTokenWithValue(SyntaxKind kind, string text, T value, string leadingTrivia, string trailingTrivia)</Member>
+        <Member type="Property">public override string Text { get; }</Member>
+        <Member type="Property">public override object Value { get; }</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>SyntaxList</Name>
+        <Access>Internal</Access>
+        <Location left="1190" top="485" />
+        <Size width="577" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">internal readonly SyntaxNode[] _children</Member>
+        <Member type="Constructor">internal SyntaxList()</Member>
+        <Member type="Constructor">internal SyntaxList(SyntaxNode[] nodes)</Member>
+        <Member type="Method">internal static SyntaxNode List(SyntaxNode[] nodes)</Member>
+        <Member type="Property">public SyntaxNode this[int index] { get; }</Member>
+        <Member type="Method">internal override RedNode CreateRedNode(RedNode parent, int position)</Member>
+        <Member type="Method">internal override GreenNode GetSlot(int index)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>SyntaxList&lt;TNode&gt;</Name>
+        <Access>Internal</Access>
+        <Location left="1361" top="171" />
+        <Size width="255" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">internal SyntaxList(SyntaxList list)</Member>
+        <Member type="Property">internal SyntaxList List { get; }</Member>
+        <Member type="Property">public TNode this[int index] { get; }</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>SyntaxListBuilder</Name>
+        <Access>Internal</Access>
+        <Location left="2044" top="485" />
+        <Size width="716" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private SyntaxNode[] _nodes</Member>
+        <Member type="Property">public int Count { get; private set; }</Member>
+        <Member type="Constructor">public SyntaxListBuilder()</Member>
+        <Member type="Method">public void Add(SyntaxNode node)</Member>
+        <Member type="Method">private void EnsureAdditionalCapacity(int additionalCount)</Member>
+        <Member type="Method">public SyntaxList ToListNode()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>SyntaxListBuilder&lt;TNode&gt;</Name>
+        <Access>Public</Access>
+        <Location left="2044" top="171" />
+        <Size width="476" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">private TNode[] _nodes</Member>
+        <Member type="Property">public int Count { get; private set; }</Member>
+        <Member type="Constructor">public SyntaxListBuilder()</Member>
+        <Member type="Method">public void Add(TNode node)</Member>
+        <Member type="Method">private void EnsureAdditionalCapacity(int additionalCount)</Member>
+        <Member type="Method">public SyntaxList&lt;TNode&gt; ToListNode()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Association" first="0" second="1">
+        <Label>Kind</Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>908</X>
+          <Y>170</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>950</X>
+          <Y>170</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Generalization" first="2" second="0">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="3" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="4" second="3">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1149</X>
+          <Y>1003</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>979</X>
+          <Y>1003</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="5" second="3">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="6" second="3">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="7" second="2">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Association" first="8" second="7">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+        <EndRole>_list</EndRole>
+      </Relationship>
+      <Relationship type="Dependency" first="9" second="7">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="10" second="8">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Syntax</Name>
+    <Language>CSharp</Language>
+    <Entities />
+    <Relationships />
+  </ProjectItem>
+</Project>
