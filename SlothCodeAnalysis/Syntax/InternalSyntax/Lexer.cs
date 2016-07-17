@@ -207,24 +207,23 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 
             if (ch == InvalidCharacter)
             {
-                throw new Exception("Unterminated string literal");
+                return string.Empty;
             }
 
             var stringLiteral = new StringBuilder();
-            while (ch != '"')
+            while (ch != '"' && ch != InvalidCharacter)
             {
                 stringLiteral.Append(ch);
                 AdvanceChar();
 
                 ch = PeekChar();
-                if (ch == InvalidCharacter)
-                {
-                    throw new Exception("Unterminated string literal");
-                }
             }
 
             // Skip the '"'
-            AdvanceChar();
+            if (ch == '"')
+            {
+                AdvanceChar();
+            }
 
             return stringLiteral.ToString();
         }

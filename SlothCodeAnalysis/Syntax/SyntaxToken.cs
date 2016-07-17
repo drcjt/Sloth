@@ -1,4 +1,5 @@
 ﻿using SlothCodeAnalysis.Syntax.InternalSyntax;
+using SlothCodeAnalysis.Text;
 
 namespace SlothCodeAnalysis.Syntax
 {
@@ -25,6 +26,14 @@ namespace SlothCodeAnalysis.Syntax
 
         public SyntaxKind Kind { get { return Node.Kind; } }
         public SyntaxNode Parent { get; }
+
+        public TextSpan Span
+        {
+            get
+            {
+                return Node != null ? new TextSpan(Position, Node.FullWidth) : default(TextSpan);
+            }
+        }
 
         public object Value => Node?.GetValue();
 

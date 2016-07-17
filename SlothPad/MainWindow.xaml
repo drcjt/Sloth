@@ -5,34 +5,123 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SlothPad"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        x:Name="SlothPadWindow"
+        Title="SlothPad" Height="350" Width="525">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBox Grid.Column="0" AcceptsReturn="True" Name="SourceCode"/>
-        <Grid Grid.Column="1">
+        <Menu Grid.Row="0" Grid.ColumnSpan="3" Height="20">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open" Click="MenuItem_Click_1"/>
+                <Separator/>
+                <MenuItem Header="_Save" Click="MenuItem_Click_2"/>
+                <MenuItem Header="Save _As" Click="MenuItem_Click"/>
+            </MenuItem>
+        </Menu>
+        
+        <Grid Grid.Row="1" Grid.Column="0" FocusManager.IsFocusScope="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0">
-                <Button Click="Button_Click">Refresh Syntax Tree</Button>
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <TreeView Name="ASTTree" SelectedItemChanged="ASTTree_SelectedItemChanged"/>
-                </ScrollViewer>
-            </StackPanel>
 
-            <ListView Grid.Row="1" Name="TreeProperties" SizeChanged="TreeProperties_SizeChanged" ScrollViewer.VerticalScrollBarVisibility="Visible">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />
-                        <GridViewColumn Header="Value" DisplayMemberBinding="{Binding Value}" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
+            <Grid Grid.Row="0" Margin="5,5,5,5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border BorderThickness="1,1,1,0">
+                    <Border.BorderBrush>
+                        <SolidColorBrush Color="#828790"/>
+                    </Border.BorderBrush>
+                    <Grid Grid.Row="0">
+                        <Grid.Background>
+                            <SolidColorBrush Color="#F0F0F0"></SolidColorBrush>
+                        </Grid.Background>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Padding="5,5,5,5" FontWeight="Bold" VerticalAlignment="Center">Syntax Tree</TextBlock>
+                        <Button Grid.Column="1" Margin="5,5,5,5" Padding="2,2,2,2" Click="Button_Click">Update</Button>
+                    </Grid>
+                </Border>
+                <Border BorderThickness="1" Grid.Row="1">
+                    <Border.BorderBrush>
+                        <SolidColorBrush Color="#828790"/>
+                    </Border.BorderBrush>
+                    <ScrollViewer VerticalScrollBarVisibility="Visible">
+                        <TreeView Name="ASTTree" SelectedItemChanged="ASTTree_SelectedItemChanged" BorderThickness="0"/>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="1" Margin="5,0,5,5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Border BorderThickness="1,1,1,0">
+                    <Border.BorderBrush>
+                        <SolidColorBrush Color="#828790"/>
+                    </Border.BorderBrush>
+
+                    <Grid Grid.Row="0">
+                        <Grid.Background>
+                            <SolidColorBrush Color="#F0F0F0"></SolidColorBrush>
+                        </Grid.Background>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" FontWeight="Bold" Padding="5,5,5,5">Properties</TextBlock>
+                        <Grid Grid.Row="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Padding="20,0,0,0" Grid.Row="0" Grid.Column="0">Type</TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="1" x:Name="TypeProperty"/>
+                            <TextBlock Padding="20,0,0,5" Grid.Row="1" Grid.Column="0">Kind</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" x:Name="KindProperty"/>
+                        </Grid>
+                    </Grid>
+                </Border>
+                <ListView Grid.Row="1" Name="TreeProperties" SizeChanged="TreeProperties_SizeChanged" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding Name}" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Value}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+           
+            </Grid>
+
         </Grid>
+
+        <GridSplitter Grid.Row="1" Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
+
+        <RichTextBox Grid.Row="1" Grid.Column="2" Margin="5,5,5,5" BorderBrush="Black" AcceptsReturn="True" Name="SourceCode" TextChanged="SourceCode_TextChanged">
+            <RichTextBox.Resources>
+                <Style TargetType="{x:Type Paragraph}">
+                    <Setter Property="Margin" Value="0"/>
+                </Style>
+            </RichTextBox.Resources>
+        </RichTextBox>
     </Grid>
 </Window>

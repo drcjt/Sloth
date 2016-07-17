@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SlothCodeAnalysis.Text;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -111,6 +112,17 @@ namespace SlothCodeAnalysis.Syntax
             }
 
             return index;
+        }
+
+        public TextSpan Span
+        {
+            get
+            {
+                var start = Position;
+                var width = GreenNode.FullWidth;
+
+                return new TextSpan(start, width);
+            }
         }
     }
 }
