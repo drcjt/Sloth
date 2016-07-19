@@ -35,6 +35,8 @@ namespace SlothCodeAnalysis.Syntax
             }
         }
 
+        public bool IsMissing => Node?.IsMissing ?? false;
+
         public object Value => Node?.GetValue();
 
         public override string ToString()

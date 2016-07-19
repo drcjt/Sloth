@@ -23,9 +23,10 @@
         PrintKeyword = 2007,
 
         // Tokens with Text
-        IdentifierToken = 3000,
-        NumericLiteralToken = 3001,
-        StringLiteralToken = 3002,
+        BadToken = 3000,
+        IdentifierToken = 3001,
+        NumericLiteralToken = 3002,
+        StringLiteralToken = 3003,
 
         // Trivia
         EndOfLineTrivia = 4000,

@@ -11,5 +11,13 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
         internal MissingToken(SyntaxKind kind, string leading, string trailing) : base(kind, leading, trailing)
         {
         }
+
+        public override bool IsMissing
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }

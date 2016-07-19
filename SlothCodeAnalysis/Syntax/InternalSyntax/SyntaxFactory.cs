@@ -14,6 +14,11 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
             return new SyntaxToken(kind, leading, trailing);
         }
 
+        internal static SyntaxToken BadToken(string leading, string text, string trailing)
+        {
+            return WithValue<string>(SyntaxKind.BadToken, leading, text, text, trailing);
+        }
+
         internal static SyntaxToken Identifier(string text)
         {
             return new SyntaxIdentifier(SyntaxKind.IdentifierToken, text);

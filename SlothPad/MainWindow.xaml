@@ -95,9 +95,9 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Padding="20,0,0,0" Grid.Row="0" Grid.Column="0">Type</TextBlock>
-                            <TextBlock Grid.Row="0" Grid.Column="1" x:Name="TypeProperty"/>
+                            <TextBlock Padding="15,0,0,0" Grid.Row="0" Grid.Column="1" x:Name="TypeProperty"/>
                             <TextBlock Padding="20,0,0,5" Grid.Row="1" Grid.Column="0">Kind</TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="1" x:Name="KindProperty"/>
+                            <TextBlock Padding="15,0,0,0" Grid.Row="1" Grid.Column="1" x:Name="KindProperty"/>
                         </Grid>
                     </Grid>
                 </Border>

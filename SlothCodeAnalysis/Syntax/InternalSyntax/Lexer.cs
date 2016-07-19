@@ -164,7 +164,8 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
                         kind = SyntaxKind.EqualsToken;
                         break;
                     default:
-                        throw new Exception($"Encountered unrecognized character '{ch}'");
+                        AdvanceChar();
+                        break;
                 }
             }
 
@@ -262,6 +263,10 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 
                 case SyntaxKind.StringLiteralToken:
                     token = SyntaxFactory.Literal(leadingTrivia, text, trailingTrivia);
+                    break;
+
+                case SyntaxKind.None:
+                    token = SyntaxFactory.BadToken(leadingTrivia, text, trailingTrivia);
                     break;
 
                 default:

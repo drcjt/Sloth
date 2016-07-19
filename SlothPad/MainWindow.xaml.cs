@@ -63,7 +63,10 @@ namespace SlothPad
                 if (selectedTreeItem.Tag is RedNode)
                 {
                     var redNode = selectedTreeItem.Tag as RedNode;
-                    //TreeProperties.Items.Add(new { Name = "Kind", Value = redNode.Kind });
+                    foreach (var property in redNode.GetType().GetProperties())
+                    {
+                        TreeProperties.Items.Add(new { Name = property.Name, Value = property.GetValue(redNode, null) });
+                    }
 
                     TypeProperty.Text = redNode.GetType().Name;
                     KindProperty.Text = redNode.Kind.ToString();
@@ -81,8 +84,10 @@ namespace SlothPad
                     TypeProperty.Text = token.GetType().Name;
                     KindProperty.Text = token.Kind.ToString();
 
-                    //TreeProperties.Items.Add(new { Name = "Kind", Value = token.Kind });
-                    TreeProperties.Items.Add(new { Name = "Value", Value = token.Value });
+                    foreach (var property in token.GetType().GetProperties())
+                    {
+                        TreeProperties.Items.Add(new { Name = property.Name, Value = property.GetValue(token, null) });
+                    }
 
                     var textRange = SourceCode.Selection;
                     var startPos = SourceCode.GetTextPointerAtOffset(token.Span.Start);

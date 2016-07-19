@@ -26,6 +26,8 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 
         public virtual bool IsToken { get { return false; } }
 
+        public virtual bool IsMissing { get { return false; } }
+
         public virtual object GetValue() { return null; }
 
         public virtual string GetLeadingTrivia() { return string.Empty; }
