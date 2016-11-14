@@ -17,11 +17,43 @@ The key ideas here are to
 The code compiles a simple c-like language called "Sloth" and has support for variables, simple
 inputs/outputs and a for-loop.
 
-##Language Specification##
-This is the language specification defined in a simple EBNF style:
+## Sloth Language Specification ##
 
+We use Extended BNF with '[' and ']' for zero and once, and '{' and '}' for any number of repition including zero.
+
+### Lexical Specifications ###
+***Keywords***
+	'var', 'for', 'to', 'do', 'end', 'read_int', 'print'
+	
+***Symbols***
+	'=', '+', '-', '*', and '/'
+	
+***White characters***
+	Space, tabulations, new line and line feed are the only white space characters supported.
+	
+***Strings***
 ```
-<prgm> := <stmt>+
+	<string> := '"' { ? any character except double quote ? } '"'
+```
+
+***Identifiers***
+	Identifiers start with a letter, followed by any number of alphanumeric characters plus the underscore. Identifiers are case sensitive.
+```
+	<ident> := ('a' .. 'z' | 'A' .. 'Z') {('a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_')}
+```
+
+***Numbers***
+	There are only numbers in Sloth.
+```
+	<int> := ('0' .. '9') { ('0' .. '9') }
+```
+
+***Invalid characters***
+	Any other character is invalid.
+
+### Syntactic Specifications ###
+```
+<prgm> := <stmt> { <stmt> }
 <stmt> := 'var' <ident> '=' <expr> ;
 	| <ident> '=' <expr> ;
 	| 'for' <ident> '=' <expr> 'to' <expr> 'do' <stmt> 'end' ;
@@ -33,14 +65,20 @@ This is the language specification defined in a simple EBNF style:
 <primary_expr> := <string>
 	| <int>
 	| <ident>
-
-<ident> := ('a' .. 'z' | 'A' .. 'Z' | '_') ('a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | '_')*
-<int> := ('0' .. '9') +
-<string> := '"' ( <esc_seq> | ~('\\' | '"') )* '"'
-<esc_seq> := '\\' ('b'|'t'|'n'|'f'|'r'|'\"'|'\''|'\\')
 ```
 
-##Sample Programs##
+#### Operator precedence ####
+
+| Precedence | Operator | Description | Associativity |
+| --- | --- | --- | --- |
+| 1 | * / | Multiplication and division | Left-to-right |
+| 2 | + - | Addition and subtraction | Left-to-right | 
+
+### Semantics ###
+
+TBD
+
+### Sample Programs ###
 A simple program could look like this:
 ```
 var x = 2;
