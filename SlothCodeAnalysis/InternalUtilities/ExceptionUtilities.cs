@@ -8,6 +8,12 @@ namespace SlothCodeAnalysis.InternalUtilities
 {
     internal static class ExceptionUtilities
     {
+        internal static Exception UnexpectedValue(object o)
+        {
+            string output = string.Format("Unexpected value '{0}' of type '{1}'", o, (o != null) ? o.GetType().FullName : "<unknown>");
+            return new InvalidOperationException(output);
+        }
+
         internal static Exception Unreachable
         {
             get

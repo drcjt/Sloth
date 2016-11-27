@@ -20,6 +20,8 @@ namespace SlothPad
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
+    /// 
+    /// See https://roslyn.codeplex.com/wikipage?title=Syntax%20Visualizer for inspiration
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -81,7 +83,7 @@ namespace SlothPad
                 {
                     var token = selectedTreeItem.Tag as SyntaxToken;
 
-                    TypeProperty.Text = token.GetType().Name;
+                    TypeProperty.Text = token.GetType().Name; // + " " + token.Value.GetType().Name;
                     KindProperty.Text = token.Kind.ToString();
 
                     foreach (var property in token.GetType().GetProperties())

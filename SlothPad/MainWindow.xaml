@@ -60,7 +60,16 @@
                         <SolidColorBrush Color="#828790"/>
                     </Border.BorderBrush>
                     <ScrollViewer VerticalScrollBarVisibility="Visible">
-                        <TreeView Name="ASTTree" SelectedItemChanged="ASTTree_SelectedItemChanged" BorderThickness="0"/>
+                        <TreeView Name="ASTTree" SelectedItemChanged="ASTTree_SelectedItemChanged" BorderThickness="0">
+                            <TreeView.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="View Directed Syntax Graph"/>
+                                    <Separator/>
+                                    <MenuItem Header="View Symbol (if any)"/>
+                                    <MenuItem Header="View TypeSymbol (if any)"/>
+                                </ContextMenu>
+                            </TreeView.ContextMenu>
+                        </TreeView>
                     </ScrollViewer>
                 </Border>
             </Grid>

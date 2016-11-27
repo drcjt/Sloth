@@ -35,19 +35,49 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <Folder Include="BoundTree\" />
     <Folder Include="Parser\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Binder\Binder.cs" />
+    <Compile Include="Binder\Binder_Expression.cs" />
+    <Compile Include="Binder\Binder_Operators.cs" />
+    <Compile Include="Binder\Binder_Statements.cs" />
+    <Compile Include="Binder\Binder_Symbol.cs" />
+    <Compile Include="Binder\LookupResult.cs" />
+    <Compile Include="Binder\Semantics\Operators\BinaryOperatorAnalysisResult.cs" />
+    <Compile Include="Binder\Semantics\Operators\BinaryOperatorEasyOut.cs" />
+    <Compile Include="Binder\Semantics\Operators\BinaryOperatorOverloadResolution.cs" />
+    <Compile Include="Binder\Semantics\Operators\BinaryOperatorOverloadResolutionResult.cs" />
+    <Compile Include="Binder\Semantics\Operators\BinaryOperatorSignature.cs" />
+    <Compile Include="Binder\Semantics\Operators\OperatorAnalysisResultKind.cs" />
+    <Compile Include="Binder\Semantics\Operators\OperatorKind.cs" />
+    <Compile Include="Binder\Semantics\Operators\OperatorKindExtensions.cs" />
+    <Compile Include="Binder\Semantics\OverloadResolution\OverloadResolution.cs" />
+    <Compile Include="BoundTree\BoundKind.cs" />
+    <Compile Include="BoundTree\BoundNode.cs" />
+    <Compile Include="BoundTree\BoundNodes.cs" />
+    <Compile Include="BoundTree\BoundTreeVisitor.cs" />
     <Compile Include="Class1.cs" />
-    <Compile Include="Compilation\Compilation.cs" />
+    <Compile Include="Collections\Boxes.cs" />
+    <Compile Include="Compilation\BuiltInOperators.cs" />
+    <Compile Include="Compilation\SlothCompilation.cs" />
+    <Compile Include="Compilation\SyntaxTreeSemanticModel.cs" />
     <Compile Include="Compilation\SyntaxAndDeclarationManager.cs" />
+    <Compile Include="ConstantValue.cs" />
+    <Compile Include="ConstantValueSpecialized.cs" />
     <Compile Include="InternalUtilities\ExceptionUtilities.cs" />
+    <Compile Include="InternalUtilities\Hash.cs" />
     <Compile Include="InternalUtilities\StackGuard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpecialType.cs" />
+    <Compile Include="SpecialTypeExtensions.cs" />
+    <Compile Include="Symbols\AssemblySymbol.cs" />
     <Compile Include="Symbols\ISymbol.cs" />
+    <Compile Include="Symbols\NamedTypeSymbol.cs" />
     <Compile Include="Symbols\Symbol.cs" />
     <Compile Include="Symbols\TypeKind.cs" />
+    <Compile Include="Symbols\TypeSymbol.cs" />
+    <Compile Include="Symbols\TypeSymbolExtensions.cs" />
     <Compile Include="Syntax\ChildSyntaxList.cs" />
     <Compile Include="Syntax\RedNode.cs" />
     <Compile Include="Syntax\InternalSyntax\GreenNode.cs" />
@@ -83,6 +113,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Syntax\InternalSyntax\Class_Diagram.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Collections.Immutable, Version=1.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.2.0\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
