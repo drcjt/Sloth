@@ -57,7 +57,7 @@ namespace SlothCodeAnalysis.Binder
 
             if (!best.HasValue)
             {
-                signature = new BinaryOperatorSignature(kind, leftType: null, rightType: null, CreateErrorType());
+                signature = new BinaryOperatorSignature(kind, leftType: null, rightType: null, returnType: CreateErrorType());
                 foundOperator = false;
             }
             else
