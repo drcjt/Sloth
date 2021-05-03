@@ -26,9 +26,7 @@ namespace SlothCodeAnalysis.Tests
 
             var binder = new Binder.Binder(compilation);
 
-
-            var boundExpression = SyntaxTreeSemanticModel.GetBoundExpressionHelper(binder, printStmt.Expression);
-
+            Assert.Throws<Exception>(() => SyntaxTreeSemanticModel.GetBoundExpressionHelper(binder, printStmt.Expression));
 
             //var printStmt = compilation.Statements[0] as PrintStatementSyntax;
             //var binder = new SlothCodeAnalysis.Binder.Binder();
