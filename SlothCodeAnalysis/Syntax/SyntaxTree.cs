@@ -19,5 +19,10 @@
         /// Gets the root node of the syntax tree.
         /// </summary>
         public abstract SyntaxNode GetRoot();
+
+        internal static SyntaxTree CreateWithoutClone(SyntaxNode root)
+        {
+            return new ParsedSyntaxTree(null, root);
+        }
     }
 }
