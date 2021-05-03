@@ -1,18 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlothCodeAnalysis", "SlothCodeAnalysis\SlothCodeAnalysis.csproj", "{2491A296-EAE3-4D53-91B8-B785195584DC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlothCodeAnalysis.Tests", "SlothCodeAnalysis.Tests\SlothCodeAnalysis.Tests.csproj", "{29DCFEF4-1ED5-4214-A2D0-65F5FED83CFF}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{99942D0C-8B56-444B-B60B-E56521FFFA7F}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlothPad", "SlothPad\SlothPad.csproj", "{6C95237C-10AD-4822-B9E5-D362F42C34CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlothCodeAnalysis", "SlothCodeAnalysis\SlothCodeAnalysis.csproj", "{412FEF07-259E-4D83-B98A-4726B415A190}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlothCodeAnalysis.Tests", "SlothCodeAnalysis.Tests\SlothCodeAnalysis.Tests.csproj", "{F486A128-8288-4B29-8419-5C2DE6CC30F3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlothPad", "SlothPad\SlothPad.csproj", "{4361EBA3-F668-4732-B470-5C463D5B98D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,20 +20,23 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2491A296-EAE3-4D53-91B8-B785195584DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2491A296-EAE3-4D53-91B8-B785195584DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2491A296-EAE3-4D53-91B8-B785195584DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2491A296-EAE3-4D53-91B8-B785195584DC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{29DCFEF4-1ED5-4214-A2D0-65F5FED83CFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{29DCFEF4-1ED5-4214-A2D0-65F5FED83CFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{29DCFEF4-1ED5-4214-A2D0-65F5FED83CFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{29DCFEF4-1ED5-4214-A2D0-65F5FED83CFF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6C95237C-10AD-4822-B9E5-D362F42C34CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6C95237C-10AD-4822-B9E5-D362F42C34CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6C95237C-10AD-4822-B9E5-D362F42C34CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6C95237C-10AD-4822-B9E5-D362F42C34CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{412FEF07-259E-4D83-B98A-4726B415A190}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{412FEF07-259E-4D83-B98A-4726B415A190}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{412FEF07-259E-4D83-B98A-4726B415A190}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{412FEF07-259E-4D83-B98A-4726B415A190}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F486A128-8288-4B29-8419-5C2DE6CC30F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F486A128-8288-4B29-8419-5C2DE6CC30F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F486A128-8288-4B29-8419-5C2DE6CC30F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F486A128-8288-4B29-8419-5C2DE6CC30F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4361EBA3-F668-4732-B470-5C463D5B98D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4361EBA3-F668-4732-B470-5C463D5B98D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4361EBA3-F668-4732-B470-5C463D5B98D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4361EBA3-F668-4732-B470-5C463D5B98D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9B1762BF-A275-4F57-BA32-21491E592AF2}
 	EndGlobalSection
 EndGlobal
