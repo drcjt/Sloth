@@ -6,12 +6,14 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 {
     internal class Lexer : IDisposable
     {
+        private readonly StringBuilder _builder;
         private readonly string _sourceText;
         private int _offset;
         public const char InvalidCharacter = char.MaxValue;
 
         public Lexer(string source)
         {
+            _builder = new StringBuilder();
             _sourceText = source;
             _offset = 0;
             _keywordKindMap = new Dictionary<string, SyntaxKind>()
@@ -182,11 +184,11 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 
         private string ScanIdentifier(char ch)
         {
-            var identifier = new StringBuilder();
+            _builder.Clear();
 
             while (char.IsLetter(ch) || ch == '_')
             {
-                identifier.Append(ch);
+                _builder.Append(ch);
                 AdvanceChar();
 
                 ch = PeekChar();
@@ -196,7 +198,7 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
                 }
             }
 
-            return identifier.ToString();
+            return _builder.ToString();
         }
 
         private string ScanStringLiteral()
@@ -211,10 +213,10 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
                 return string.Empty;
             }
 
-            var stringLiteral = new StringBuilder();
+            _builder.Clear();
             while (ch != '"' && ch != InvalidCharacter)
             {
-                stringLiteral.Append(ch);
+                _builder.Append(ch);
                 AdvanceChar();
 
                 ch = PeekChar();
@@ -226,15 +228,15 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
                 AdvanceChar();
             }
 
-            return stringLiteral.ToString();
+            return _builder.ToString();
         }
 
         public int ScanNumericLiteral(char ch)
         {
-            var numericLiteral = new StringBuilder();
+            _builder.Clear();
             while (char.IsDigit(ch))
             {
-                numericLiteral.Append(ch);
+                _builder.Append(ch);
 
                 AdvanceChar();
 
@@ -245,7 +247,7 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
                 }
             }
 
-            return int.Parse(numericLiteral.ToString());
+            return int.Parse(_builder.ToString());
         }
 
         private SyntaxToken Create(SyntaxKind kind, string text, object value, string leadingTrivia, string trailingTrivia)
