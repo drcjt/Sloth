@@ -1,4 +1,5 @@
-﻿using SlothCodeAnalysis.BoundTree;
+﻿using SlothCodeAnalysis.Binder;
+using SlothCodeAnalysis.BoundTree;
 using SlothCodeAnalysis.Syntax;
 using System;
 using System.Collections.Generic;
@@ -55,14 +56,13 @@ namespace SlothCodeAnalysis.Compilation
             }
         }
 
-        public static BoundExpression GetBoundExpressionHelper(SlothCodeAnalysis.Binder.Binder binder, ExpressionSyntax expression)
+        public static BoundExpression GetBoundExpressionHelper(SlothCodeAnalysis.Binder.Binder binder, ExpressionSyntax expression, BindingDiagnosticBag diagnostics)
         {
             Debug.Assert(binder != null);
-            //Debug.Assert(binder.IsSemanticModelBinder);
             Debug.Assert(expression != null);
 
             BoundExpression boundNode;
-            boundNode = binder.BindExpression(expression);
+            boundNode = binder.BindExpression(expression, diagnostics);
 
             return boundNode;
         }

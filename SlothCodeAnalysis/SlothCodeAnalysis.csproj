@@ -43,6 +43,7 @@
     <Compile Include="Binder\Binder_Operators.cs" />
     <Compile Include="Binder\Binder_Statements.cs" />
     <Compile Include="Binder\Binder_Symbol.cs" />
+    <Compile Include="Binder\BindingDiagnosticBag.cs" />
     <Compile Include="Binder\LookupResult.cs" />
     <Compile Include="Binder\Semantics\Operators\BinaryOperatorAnalysisResult.cs" />
     <Compile Include="Binder\Semantics\Operators\BinaryOperatorEasyOut.cs" />
@@ -65,6 +66,11 @@
     <Compile Include="Compilation\SyntaxAndDeclarationManager.cs" />
     <Compile Include="ConstantValue.cs" />
     <Compile Include="ConstantValueSpecialized.cs" />
+    <Compile Include="Diagnostic\DiagnosticBag.cs" />
+    <Compile Include="Diagnostic\SlothDiagnostic.cs" />
+    <Compile Include="Diagnostic\DiagnosticInfo.cs" />
+    <Compile Include="Diagnostic\SourceLocation.cs" />
+    <Compile Include="Errors\ErrorCode.cs" />
     <Compile Include="InternalUtilities\ExceptionUtilities.cs" />
     <Compile Include="InternalUtilities\Hash.cs" />
     <Compile Include="InternalUtilities\StackGuard.cs" />

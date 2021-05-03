@@ -26,10 +26,11 @@ namespace SlothCodeAnalysis.Tests
 
             var binder = new Binder.Binder(compilation);
 
-            Assert.Throws<Exception>(() => SyntaxTreeSemanticModel.GetBoundExpressionHelper(binder, printStmt.Expression));
+            var diagnostics = new BindingDiagnosticBag();
 
-            //var printStmt = compilation.Statements[0] as PrintStatementSyntax;
-            //var binder = new SlothCodeAnalysis.Binder.Binder();
+            var boundExpression = SyntaxTreeSemanticModel.GetBoundExpressionHelper(binder, printStmt.Expression, diagnostics);
+
+            Assert.AreEqual(2, diagnostics.DiagnosticBag.AsCollection().Count);
         }
     }
 }

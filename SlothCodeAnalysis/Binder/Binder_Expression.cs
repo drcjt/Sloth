@@ -24,24 +24,24 @@ namespace SlothCodeAnalysis.Binder
         /// did not meet the requirements, the return value will be a <see cref="BoundBadExpression"/> that
         /// (typically) wraps the subexpression.
         /// </summary>
-        internal BoundExpression BindValue(ExpressionSyntax node, BindValueKind valueKind)
+        internal BoundExpression BindValue(ExpressionSyntax node, BindingDiagnosticBag diagnostics, BindValueKind valueKind)
         {
-            var result = BindExpression(node, invoked: false, indexed: false);
+            var result = BindExpression(node, diagnostics, invoked: false, indexed: false);
             return CheckValue(result, valueKind);
         }
 
-        public BoundExpression BindExpression(ExpressionSyntax node)
+        public BoundExpression BindExpression(ExpressionSyntax node, BindingDiagnosticBag diagnostics)
         {
-            return BindExpression(node, invoked: false, indexed: false);
+            return BindExpression(node, diagnostics, invoked: false, indexed: false);
         }
 
-        protected BoundExpression BindExpression(ExpressionSyntax node, bool invoked, bool indexed)
+        protected BoundExpression BindExpression(ExpressionSyntax node, BindingDiagnosticBag diagnostics, bool invoked, bool indexed)
         {
-            BoundExpression expr = BindExpressionInternal(node, invoked, indexed);
+            BoundExpression expr = BindExpressionInternal(node, diagnostics, invoked, indexed);
             return expr;
         }
 
-        private BoundExpression BindExpressionInternal(ExpressionSyntax node, bool invoked, bool indexed)
+        private BoundExpression BindExpressionInternal(ExpressionSyntax node, BindingDiagnosticBag diagnostics, bool invoked, bool indexed)
         {
             switch (node.Kind)
             {
@@ -52,7 +52,7 @@ namespace SlothCodeAnalysis.Binder
                 case SyntaxKind.MultiplyExpression:
                 case SyntaxKind.SubtractExpression:
                 case SyntaxKind.DivideExpression:
-                    return BindSimpleBinaryOperator((BinaryExpressionSyntax)node);
+                    return BindSimpleBinaryOperator((BinaryExpressionSyntax)node, diagnostics);
 
 
                 case SyntaxKind.NumericLiteralExpression:
@@ -74,7 +74,7 @@ namespace SlothCodeAnalysis.Binder
         }
         */
 
-        private BoundExpression BindSimpleBinaryOperator(BinaryExpressionSyntax node)
+        private BoundExpression BindSimpleBinaryOperator(BinaryExpressionSyntax node, BindingDiagnosticBag diagnostics)
         {
             // The simple binary operators are left-associative, and expressions of the form
             // a + b + c + d .... are relatively common in machine-generated code. The parser can handle
@@ -91,10 +91,10 @@ namespace SlothCodeAnalysis.Binder
             {
                 var binOp = (BinaryExpressionSyntax)current;
                 syntaxNodes.Push(binOp);
-                expressions.Push(BindValue(binOp.Right, BindValueKind.RValue));
+                expressions.Push(BindValue(binOp.Right, diagnostics, BindValueKind.RValue));
                 current = binOp.Left;
             }
-            BoundExpression leftMost = BindExpression(current);
+            BoundExpression leftMost = BindExpression(current, diagnostics);
             expressions.Push(leftMost);
 
             Debug.Assert(syntaxNodes.Count + 1 == expressions.Count);
@@ -106,7 +106,7 @@ namespace SlothCodeAnalysis.Binder
                 BoundExpression left = expressions.Pop();
                 BoundExpression right = expressions.Pop();
                 left = CheckValue(left, BindValueKind.RValue);
-                BoundExpression boundOp = BindSimpleBinaryOperator(syntaxNode, left, right, ref compoundStringLength);
+                BoundExpression boundOp = BindSimpleBinaryOperator(syntaxNode, diagnostics, left, right, ref compoundStringLength);
                 expressions.Push(boundOp);
             }
 
@@ -116,7 +116,7 @@ namespace SlothCodeAnalysis.Binder
             return result;
         }
 
-        private BoundExpression BindSimpleBinaryOperator(BinaryExpressionSyntax node, BoundExpression left, BoundExpression right, ref int compoundStringLength)
+        private BoundExpression BindSimpleBinaryOperator(BinaryExpressionSyntax node, BindingDiagnosticBag diagnostics, BoundExpression left, BoundExpression right, ref int compoundStringLength)
         {
             BinaryOperatorKind kind = SyntaxKindToBinaryOperatorKind(node.Kind);
 
@@ -124,11 +124,17 @@ namespace SlothCodeAnalysis.Binder
             TypeSymbol rightType = right.Type;
 
             /* Perform binary operator overload resoluton */
-            var best = this.BinaryOperatorOverloadResolution(kind, left, right, node);
+            BinaryOperatorSignature signature;
+            BinaryOperatorAnalysisResult best;
+            bool foundOperator = BindSimpleBinaryOperatorParts(node, diagnostics, left, right, kind, out signature, out best);
+
+            if (!foundOperator)
+            {
+                ReportBinaryOperatorError(node, diagnostics, node.OperatorToken, left, right);
+            }
 
             BoundExpression resultLeft = left;
             BoundExpression resultRight = right;
-            var signature = best.Signature;
             BinaryOperatorKind resultOperatorKind = signature.Kind;
             TypeSymbol resultType = signature.ReturnType;
 

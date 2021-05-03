@@ -1,5 +1,8 @@
 ﻿using SlothCodeAnalysis.Binder.Semantics;
 using SlothCodeAnalysis.Compilation;
+using SlothCodeAnalysis.Diagnostic;
+using SlothCodeAnalysis.Errors;
+using SlothCodeAnalysis.Syntax;
 using System.Diagnostics;
 using System.Threading;
 
@@ -36,6 +39,11 @@ namespace SlothCodeAnalysis.Binder
             }
         }
 
+        internal static void Error(BindingDiagnosticBag diagnostics, ErrorCode code, SyntaxNode syntax, params object[] args)
+        {
+            var diagnostic = new SlothDiagnostic(new DiagnosticInfo(code, args), syntax.Location);
+            diagnostics.Add(diagnostic);
+        }
 
         internal enum BindValueKind : byte
         {
