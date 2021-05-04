@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SlothCodeAnalysis.Text;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,16 +7,15 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 {
     internal class Lexer : IDisposable
     {
+        private readonly SlidingTextWindow TextWindow;
+
         private readonly StringBuilder _builder;
-        private readonly string _sourceText;
-        private int _offset;
         public const char InvalidCharacter = char.MaxValue;
 
-        public Lexer(string source)
+        public Lexer(SourceText text)
         {
+            TextWindow = new SlidingTextWindow(text);
             _builder = new StringBuilder();
-            _sourceText = source;
-            _offset = 0;
             _keywordKindMap = new Dictionary<string, SyntaxKind>()
             {
                 { "var", SyntaxKind.VarKeyword },
@@ -28,31 +28,6 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
             };
         }
 
-        private char PeekChar()
-        {
-            if (_offset >= _sourceText.Length)
-            {
-                return InvalidCharacter;
-            }
-
-            return _sourceText[_offset];
-        }
-
-        private void AdvanceChar()
-        {
-            _offset++;
-        }
-
-        private char NextChar()
-        {
-            var c = PeekChar();
-            if (c != InvalidCharacter)
-            {
-                _offset++;
-            }
-            return c;
-        }
-
         public SyntaxToken Lex()
         {
             return LexSyntaxToken();
@@ -61,7 +36,7 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
         private SyntaxToken LexSyntaxToken()
         {
             // Lex leading syntax trivia
-            var leadingTrivia = _offset == 0 ? LexSyntaxTrivia() : null;
+            var leadingTrivia = TextWindow.Position == 0 ? LexSyntaxTrivia() : null;
 
             var tokenInfo = ScanSyntaxToken();
 
@@ -73,21 +48,17 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 
         private string LexSyntaxTrivia()
         {
-            var startOffset = _offset;
+            var trivia = String.Empty;
 
-            var ch = PeekChar();
+            var ch = TextWindow.PeekChar();
             while (char.IsWhiteSpace(ch))
             {
-                AdvanceChar();
-                ch = PeekChar();
+                trivia += ch; // TODO: Use stringbuilder
+                TextWindow.AdvanceChar();
+                ch = TextWindow.PeekChar();
             }
 
-            if (_offset > startOffset)
-            {
-                return _sourceText.Substring(startOffset, _offset - startOffset);
-            }
-
-            return string.Empty;
+            return trivia;
         }
 
         internal struct TokenInfo
@@ -101,13 +72,13 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 
         private TokenInfo ScanSyntaxToken()
         {
-            var startOffset = _offset;
+            var startOffset = TextWindow.Position;
 
             SyntaxKind kind = SyntaxKind.None;
             object value = null;
 
             // Lex token
-            var ch = PeekChar();
+            var ch = TextWindow.PeekChar();
             if (char.IsLetter(ch))
             {
                 // Lex Identifer
@@ -134,7 +105,7 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
             }
             else if (ch == ';')
             {
-                AdvanceChar();
+                TextWindow.AdvanceChar();
                 kind = SyntaxKind.SemicolonToken;
             }
             else if (ch == InvalidCharacter)
@@ -146,32 +117,33 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
                 switch (ch)
                 {
                     case '+':
-                        AdvanceChar();
+                        TextWindow.AdvanceChar();
                         kind = SyntaxKind.PlusToken;
                         break;
                     case '-':
-                        AdvanceChar();
+                        TextWindow.AdvanceChar();
                         kind = SyntaxKind.MinusToken;
                         break;
                     case '*':
-                        AdvanceChar();
+                        TextWindow.AdvanceChar();
                         kind = SyntaxKind.AsteriskToken;
                         break;
                     case '/':
-                        AdvanceChar();
+                        TextWindow.AdvanceChar();
                         kind = SyntaxKind.SlashToken;
                         break;
                     case '=':
-                        AdvanceChar();
+                        TextWindow.AdvanceChar();
                         kind = SyntaxKind.EqualsToken;
                         break;
                     default:
-                        AdvanceChar();
+                        TextWindow.AdvanceChar();
                         break;
                 }
             }
 
-            var text = _sourceText.Substring(startOffset, _offset - startOffset);
+            // TODO: must be a better way to deal with this
+            var text = TextWindow.Text.ToString(new TextSpan(startOffset, TextWindow.Position - startOffset));
 
             // Return syntax token
             var tokenInfo = default(TokenInfo);
@@ -189,9 +161,9 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
             while (char.IsLetter(ch) || ch == '_')
             {
                 _builder.Append(ch);
-                AdvanceChar();
+                TextWindow.AdvanceChar();
 
-                ch = PeekChar();
+                ch = TextWindow.PeekChar();
                 if (ch == InvalidCharacter)
                 {
                     break;
@@ -204,9 +176,9 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
         private string ScanStringLiteral()
         {
             // Skip the '"'
-            AdvanceChar();
+            TextWindow.AdvanceChar();
 
-            var ch = PeekChar();
+            var ch = TextWindow.PeekChar();
 
             if (ch == InvalidCharacter)
             {
@@ -217,15 +189,15 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
             while (ch != '"' && ch != InvalidCharacter)
             {
                 _builder.Append(ch);
-                AdvanceChar();
+                TextWindow.AdvanceChar();
 
-                ch = PeekChar();
+                ch = TextWindow.PeekChar();
             }
 
             // Skip the '"'
             if (ch == '"')
             {
-                AdvanceChar();
+                TextWindow.AdvanceChar();
             }
 
             return _builder.ToString();
@@ -238,9 +210,9 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
             {
                 _builder.Append(ch);
 
-                AdvanceChar();
+                TextWindow.AdvanceChar();
 
-                ch = PeekChar();
+                ch = TextWindow.PeekChar();
                 if (ch == InvalidCharacter)
                 {
                     break;

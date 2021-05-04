@@ -1,9 +1,17 @@
-﻿namespace SlothCodeAnalysis.Syntax
+﻿using SlothCodeAnalysis.Text;
+using System;
+
+namespace SlothCodeAnalysis.Syntax
 {
     public abstract partial class SyntaxTree
     {
-        public static SyntaxTree ParseText(string text)
+        public static SyntaxTree ParseText(SourceText text)
         {
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
+
             using (var lexer = new InternalSyntax.Lexer(text))
             {
                 using (var parser = new InternalSyntax.LanguageParser(lexer))
@@ -13,6 +21,11 @@
                     return tree;
                 }
             }
+        }
+
+        public static SyntaxTree ParseText(string text)
+        {
+            return ParseText(SourceText.From(text));
         }
 
         /// <summary>

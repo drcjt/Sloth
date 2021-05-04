@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SlothCodeAnalysis.Text;
+using System.Collections.Generic;
 
 namespace SlothCodeAnalysis.Syntax
 {
@@ -6,7 +7,7 @@ namespace SlothCodeAnalysis.Syntax
     {
         public static IEnumerable<SyntaxToken> ParseTokens(string text)
         {
-            using (var lexer = new InternalSyntax.Lexer(text))
+            using (var lexer = new InternalSyntax.Lexer(SourceText.From(text)))
             {
                 var endOfFile = false;
                 while (!endOfFile)
@@ -42,7 +43,7 @@ namespace SlothCodeAnalysis.Syntax
 
         private static InternalSyntax.Lexer MakeLexer(string text)
         {
-            return new InternalSyntax.Lexer(text);
+            return new InternalSyntax.Lexer(SourceText.From(text));
         }
 
         private static InternalSyntax.LanguageParser MakeParser(InternalSyntax.Lexer lexer)
@@ -60,6 +61,11 @@ namespace SlothCodeAnalysis.Syntax
                     return (CompilationUnitSyntax)node.CreateRedNode();
                 }
             }
+        }
+
+        public static SyntaxTree ParseSyntaxTree(SourceText text)
+        {
+            return SyntaxTree.ParseText(text);
         }
     }
 }

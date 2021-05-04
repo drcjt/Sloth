@@ -113,6 +113,14 @@ namespace SlothCodeAnalysis.Text
                     return false;
                 }
 
+                if (_characterWindowCount >= _characterWindow.Length)
+                {
+                    char[] oldWindow = _characterWindow;
+                    char[] newWindow = new char[_characterWindow.Length * 2];
+                    Array.Copy(oldWindow, 0, newWindow, 0, _characterWindowCount);
+                    _characterWindow = newWindow;
+                }
+
                 int amountToRead = Math.Min(_textEnd - (_basis + _characterWindowCount), _characterWindow.Length - _characterWindowCount);
                 _text.CopyTo(_basis + _characterWindowCount, _characterWindow, _characterWindowCount, amountToRead);
                 _characterWindowCount += amountToRead;
