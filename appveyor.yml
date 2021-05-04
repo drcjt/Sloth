@@ -15,6 +15,9 @@ build_script:
   # output will be in ./src/bin/debug/netcoreapp1.1/publish
   - cmd: dotnet publish Sloth.sln
   
+test_script:
+  - cmd: dotnet test Sloth.sln
+  
 after_build:
   7z a slothpad.zip %APPVEYOR_BUILD_FOLDER%\SlothPad\bin\Debug\*
   
