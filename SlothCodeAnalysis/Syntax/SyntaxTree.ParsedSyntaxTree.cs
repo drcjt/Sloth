@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SlothCodeAnalysis.Text;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,10 +11,10 @@ namespace SlothCodeAnalysis.Syntax
     {
         private class ParsedSyntaxTree : SyntaxTree
         {
-            private string _text;
+            private SourceText _text;
             private readonly SyntaxNode _root;
 
-            internal ParsedSyntaxTree(string text, SyntaxNode root)
+            internal ParsedSyntaxTree(SourceText text, SyntaxNode root)
             {
                 _text = text;
                 _root = root;
