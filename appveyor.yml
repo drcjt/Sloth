@@ -16,7 +16,8 @@ build_script:
   - cmd: dotnet publish Sloth.sln
   
 test_script:
-  - cmd: dotnet test Sloth.sln
+  - cmd: nuget install Appveyor.TestLogger -Version 2.0.0
+  - cmd: dotnet test --no-build --no-restore --test-adapter-path:. --logger:Appveyor Sloth.sln
   
 after_build:
   7z a slothpad.zip %APPVEYOR_BUILD_FOLDER%\SlothPad\bin\Debug\*
