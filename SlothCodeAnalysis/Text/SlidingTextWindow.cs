@@ -2,7 +2,13 @@
 
 namespace SlothCodeAnalysis.Text
 {
-    // A sliding buffer over the SourceText of a file for the lexer.
+    /// <summary>
+    /// A sliding window over the SourceText of a file for the lexer.
+    /// The window will grow until the Reset method is called which will reset the window to the given position with the default window size
+    ///
+    ///
+    /// TODO: ideally need to use an object pool of char arrays rather than have this always allocate new char arrays
+    /// </summary>
     public sealed class SlidingTextWindow
     {
         private readonly SourceText _text;
@@ -23,6 +29,12 @@ namespace SlothCodeAnalysis.Text
             _basis = 0;
             _offset = 0;
             _textEnd = text.Length;
+
+            // Populate window
+            int amountToRead = Math.Min(_textEnd - _characterWindowCount, _characterWindow.Length);
+            _characterWindowCount = _characterWindow.Length;
+            _text.CopyTo(0, _characterWindow, 0, amountToRead);
+            _characterWindowCount = amountToRead;
         }
 
         public SourceText Text
