@@ -64,19 +64,20 @@ namespace SlothCodeAnalysis.Text
         public char NextChar()
         {
             char c = PeekChar();
+            if (c != InvalidCharacter)
+            {
+                this.AdvanceChar();
+            }
             return c;
         }
 
         public char PeekChar()
         {
             // Do we need to read more characters
-            if (_offset >= _characterWindowCount)
+            if (_offset >= _characterWindowCount && !MoreChars())
             {
-                if (!MoreChars())
-                {
-                    // If no more characters to read then return invalid character
-                    return InvalidCharacter;
-                }
+                // If no more characters to read then return invalid character
+                return InvalidCharacter;
             }
 
             return _characterWindow[_offset];
