@@ -9,13 +9,11 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
     {
         private readonly SlidingTextWindow TextWindow;
 
-        private readonly StringBuilder _builder;
         public const char InvalidCharacter = char.MaxValue;
 
         public Lexer(SourceText text)
         {
             TextWindow = new SlidingTextWindow(text);
-            _builder = new StringBuilder();
             _keywordKindMap = new Dictionary<string, SyntaxKind>()
             {
                 { "var", SyntaxKind.VarKeyword },
@@ -48,17 +46,16 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 
         private string LexSyntaxTrivia()
         {
-            var trivia = String.Empty;
-
+            TextWindow.Start();
+         
             var ch = TextWindow.PeekChar();
             while (char.IsWhiteSpace(ch))
             {
-                trivia += ch; // TODO: Use stringbuilder
                 TextWindow.AdvanceChar();
                 ch = TextWindow.PeekChar();
             }
 
-            return trivia;
+            return TextWindow.GetText();
         }
 
         internal struct TokenInfo
@@ -142,8 +139,7 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
                 }
             }
 
-            // TODO: must be a better way to deal with this
-            var text = TextWindow.Text.ToString(new TextSpan(startOffset, TextWindow.Position - startOffset));
+            var text = TextWindow.GetText(startOffset, TextWindow.Position - startOffset);
 
             // Return syntax token
             var tokenInfo = default(TokenInfo);
@@ -156,21 +152,15 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
 
         private string ScanIdentifier(char ch)
         {
-            _builder.Clear();
+            TextWindow.Start();
 
             while (char.IsLetter(ch) || ch == '_')
             {
-                _builder.Append(ch);
                 TextWindow.AdvanceChar();
-
                 ch = TextWindow.PeekChar();
-                if (ch == InvalidCharacter)
-                {
-                    break;
-                }
             }
 
-            return _builder.ToString();
+            return TextWindow.GetText();
         }
 
         private string ScanStringLiteral()
@@ -185,13 +175,13 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
                 return string.Empty;
             }
 
-            _builder.Clear();
+            int start = TextWindow.Position;
+            int width = 0;
             while (ch != '"' && ch != InvalidCharacter)
             {
-                _builder.Append(ch);
                 TextWindow.AdvanceChar();
-
                 ch = TextWindow.PeekChar();
+                width++;
             }
 
             // Skip the '"'
@@ -200,31 +190,24 @@ namespace SlothCodeAnalysis.Syntax.InternalSyntax
                 TextWindow.AdvanceChar();
             }
 
-            return _builder.ToString();
+            return TextWindow.GetText(start, width);
         }
 
         public int ScanNumericLiteral(char ch)
         {
-            _builder.Clear();
+            TextWindow.Start();
             while (char.IsDigit(ch))
             {
-                _builder.Append(ch);
-
                 TextWindow.AdvanceChar();
-
                 ch = TextWindow.PeekChar();
-                if (ch == InvalidCharacter)
-                {
-                    break;
-                }
             }
 
-            return int.Parse(_builder.ToString());
+            return int.Parse(TextWindow.GetText());
         }
 
         private SyntaxToken Create(SyntaxKind kind, string text, object value, string leadingTrivia, string trailingTrivia)
         {
-            SyntaxToken token = null;
+            SyntaxToken token;
             switch (kind)
             {
                 case SyntaxKind.IdentifierToken:

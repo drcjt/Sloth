@@ -4,7 +4,10 @@ namespace SlothCodeAnalysis.Text
 {
     /// <summary>
     /// A sliding window over the SourceText of a file for the lexer.
-    /// The window will grow until the Reset method is called which will reset the window to the given position with the default window size
+    /// 
+    /// By using character arrays this allows for much faster "substring" than String.Substring - this is
+    /// primarily used in GetText.
+    /// Note GetText can be further improved by using interning for common character strings
     ///
     ///
     /// TODO: ideally need to use an object pool of char arrays rather than have this always allocate new char arrays
@@ -15,6 +18,8 @@ namespace SlothCodeAnalysis.Text
         private int _basis;
         private int _offset;
         private readonly int _textEnd;
+
+        private int _lexemeStart;
 
         private const int DefaultWindowLength = 20; // Set to 50 to be more testing as sample input is going to be pretty small for this compiler
 
@@ -61,6 +66,19 @@ namespace SlothCodeAnalysis.Text
             {
                 return _offset;
             }
+        }
+
+        public int Width
+        {
+            get
+            {
+                return _offset - _lexemeStart;
+            }
+        }
+
+        public void Start()
+        {
+            _lexemeStart = _offset;
         }
 
         public void AdvanceChar()
@@ -141,6 +159,20 @@ namespace SlothCodeAnalysis.Text
             }
 
             return true;
+        }
+
+        public string GetText()
+        {
+            return GetText(_lexemeStart, Width);
+        }
+
+        public string GetText(int position, int length)
+        {
+            int offset = position - _basis;
+
+            // TODO: Use string interning here to avoid allocation of new string objects
+
+            return new string(_characterWindow, offset, length);
         }
     }
 }
